@@ -1,0 +1,33 @@
+{
+  "id": "task-001",
+  "title": "Create User Registration Form",
+  "description": "Build a user registration form with email, password, and name fields",
+  "type": "development",
+  "subtype": "frontend",
+  "priority": "high",
+  "status": "pending",
+  "context": {
+    "framework": "React",
+    "language": "TypeScript",
+    "styling": "Tailwind CSS",
+    "validation": "react-hook-form + zod"
+  },
+  "requirements": [
+    "Email field with validation",
+    "Password field with strength indicator",
+    "Name field",
+    "Submit button with loading state",
+    "Error handling and display",
+    "Accessibility compliant"
+  ],
+  "acceptanceCriteria": [
+    "Form validates all inputs",
+    "Shows appropriate error messages",
+    "Submits data to API endpoint",
+    "Handles loading and error states",
+    "Accessible via keyboard and screen reader"
+  ],
+  "dependencies": [],
+  "estimatedTime": "2 hours",
+  "createdAt": "2024-01-15T10:00:00Z"
+}

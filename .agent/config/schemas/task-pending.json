@@ -1,0 +1,40 @@
+{
+  "schema": "pending-task",
+  "version": "1.0.0",
+  "description": "Schema for tasks in pending queue",
+  "example": {
+    "id": "task-uuid-v4",
+    "type": "code|research|test|review|fix",
+    "agentType": "frontend|backend|database|api-design|...",
+    "priority": 1,
+    "title": "Create user registration form",
+    "description": "Build a React form with validation",
+    "dependencies": ["task-id-1", "task-id-2"],
+    "payload": {
+      "file": "src/components/RegisterForm.tsx",
+      "techStack": ["React", "TypeScript", "Tailwind"]
+    },
+    "createdAt": "2025-01-08T12:00:00Z",
+    "claimedBy": null,
+    "claimedAt": null,
+    "timeout": 300,
+    "retries": 0,
+    "maxRetries": 3
+  },
+  "fields": {
+    "id": "Unique task identifier (UUID v4)",
+    "type": "Task category: code, research, test, review, fix",
+    "agentType": "Which agent should handle this",
+    "priority": "1-10 (1 = highest, 10 = lowest)",
+    "title": "Short task title",
+    "description": "Detailed task description",
+    "dependencies": "List of task IDs that must complete first",
+    "payload": "Task-specific data (files, config, etc.)",
+    "createdAt": "ISO 8601 timestamp",
+    "claimedBy": "Agent ID who claimed this (null if not claimed)",
+    "claimedAt": "ISO 8601 timestamp when claimed",
+    "timeout": "Seconds before task is considered stuck",
+    "retries": "Current retry count",
+    "maxRetries": "Maximum retry attempts before DLQ"
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "examples": {
+    "frontend": {
+      "agent": "Frontend Developer",
+      "task": "Create user registration form",
+      "output": {
+        "success": true,
+        "files": [
+          {
+            "path": "src/components/auth/RegisterForm.tsx",
+            "content": "// React component with form validation"
+          },
+          {
+            "path": "src/components/auth/Input.tsx",
+            "content": "// Reusable input component"
+          }
+        ],
+        "tests": ["src/components/auth/__tests__/RegisterForm.test.tsx"],
+        "dependencies": ["react-hook-form", "zod"],
+        "notes": "Form validates on submit, shows loading state during API call"
+      }
+    },
+    "backend": {
+      "agent": "Backend Developer",
+      "task": "Create user registration endpoint",
+      "output": {
+        "success": true,
+        "files": [
+          {
+            "path": "src/api/routes/users.ts",
+            "content": "// POST /users endpoint with validation"
+          },
+          {
+            "path": "src/services/userService.ts",
+            "content": "// User creation logic with password hashing"
+          }
+        ],
+        "endpoints": ["POST /api/users"],
+        "dependencies": ["express", "bcrypt", "zod"],
+        "notes": "Returns 201 on success, 409 if email exists"
+      }
+    },
+    "testing": {
+      "agent": "QA Engineer",
+      "task": "Test user registration flow",
+      "output": {
+        "success": true,
+        "testsRun": 15,
+        "testsPassed": 15,
+        "testsFailed": 0,
+        "coverage": {
+          "statements": 92.5,
+          "branches": 88.3,
+          "functions": 95.0,
+          "lines": 93.1
+        },
+        "testFiles": [
+          "src/components/auth/__tests__/RegisterForm.test.tsx",
+          "src/api/routes/__tests__/users.test.ts",
+          "src/services/__tests__/userService.test.ts",
+          "e2e/registration.spec.ts"
+        ]
+      }
+    },
+    "reviewer-code": {
+      "agent": "Code Reviewer",
+      "task": "Review user registration code",
+      "output": {
+        "success": true,
+        "review": {
+          "overallScore": 82,
+          "strengths": [
+            "Good TypeScript usage",
+            "Proper error handling",
+            "Clean component structure"
+          ],
+          "issues": [
+            {
+              "severity": "medium",
+              "category": "code-quality",
+              "file": "src/components/auth/RegisterForm.tsx",
+              "line": 45,
+              "description": "Component is too long (120 lines), should be split",
+              "suggestion": "Extract validation logic to separate hook"
+            }
+          ],
+          "assessment": "PASS"
+        }
+      }
+    },
+    "reviewer-security": {
+      "agent": "Security Reviewer",
+      "task": "Security review of authentication",
+      "output": {
+        "success": true,
+        "review": {
+          "overallScore": 95,
+          "strengths": [
+            "Proper password hashing with bcrypt",
+            "JWT with expiration",
+            "Rate limiting implemented"
+          ],
+          "vulnerabilities": [],
+          "recommendations": [
+            "Add MFA support",
+            "Implement account lockout after failed attempts"
+          ],
+          "assessment": "PASS"
+        }
+      }
+    },
+    "fixer": {
+      "agent": "Bug Fixer",
+      "task": "Fix login bug where redirect doesn't work",
+      "output": {
+        "success": true,
+        "fix": {
+          "issue": "Login redirect fails after successful authentication",
+          "rootCause": "useNavigate hook called outside React context",
+          "file": "src/components/auth/LoginForm.tsx",
+          "line": 38,
+          "fix": "Moved navigation logic to useEffect with proper dependency",
+          "testsPassed": 8,
+          "testsFailed": 0
+        }
+      }
+    }
+  }
+}

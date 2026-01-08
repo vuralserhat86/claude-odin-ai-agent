@@ -1,0 +1,34 @@
+{
+  "schema": "in-progress-task",
+  "version": "1.0.0",
+  "description": "Schema for tasks currently being executed",
+  "example": {
+    "id": "task-uuid-v4",
+    "type": "code",
+    "agentType": "frontend",
+    "claimedBy": "frontend-001",
+    "claimedAt": "2025-01-08T12:05:00Z",
+    "startedAt": "2025-01-08T12:05:10Z",
+    "progress": 50,
+    "status": "in-progress",
+    "lastHeartbeat": "2025-01-08T12:25:00Z",
+    "estimatedCompletion": "2025-01-08T12:15:00Z"
+  },
+  "fields": {
+    "id": "Unique task identifier",
+    "type": "Task category",
+    "agentType": "Agent type handling this",
+    "claimedBy": "Agent ID working on this",
+    "claimedAt": "When task was claimed from queue",
+    "startedAt": "When agent actually started work",
+    "progress": "Percentage complete (0-100)",
+    "status": "in-progress, completing, failed",
+    "lastHeartbeat": "Last agent heartbeat timestamp",
+    "estimatedCompletion": "Expected completion time"
+  },
+  "notes": [
+    "Agent should update progress every 30 seconds",
+    "If lastHeartbeat > timeout, task is considered stuck",
+    "Stuck tasks are moved to failed queue for retry"
+  ]
+}

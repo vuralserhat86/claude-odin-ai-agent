@@ -1,0 +1,166 @@
+{
+  "mcpTools": {
+    "file": {
+      "Read": {
+        "description": "Read a file from the filesystem",
+        "useFor": "Reading source code, configuration, documentation"
+      },
+      "Write": {
+        "description": "Write a new file or overwrite existing",
+        "useFor": "Creating new files, writing code"
+      },
+      "Edit": {
+        "description": "Make string replacements in files",
+        "useFor": "Modifying existing code"
+      },
+      "Glob": {
+        "description": "Find files matching patterns",
+        "useFor": "Finding files by name or pattern"
+      },
+      "Grep": {
+        "description": "Search file contents",
+        "useFor": "Finding code patterns, usages"
+      }
+    },
+    "terminal": {
+      "Bash": {
+        "description": "Execute shell commands",
+        "useFor": "Running tests, build commands, git operations"
+      },
+      "KillShell": {
+        "description": "Kill running background shells",
+        "useFor": "Cleaning up processes"
+      }
+    },
+    "development": {
+      "LSP": {
+        "description": "Language Server Protocol operations",
+        "operations": [
+          "goToDefinition",
+          "findReferences",
+          "hover",
+          "documentSymbol",
+          "prepareCallHierarchy",
+          "incomingCalls",
+          "outgoingCalls"
+        ],
+        "useFor": "Code intelligence, navigation"
+      }
+    },
+    "web": {
+      "WebSearch": {
+        "description": "Search the web for information",
+        "useFor": "Research, finding solutions, documentation"
+      },
+      "mcp__duckduckgo__search": {
+        "description": "DuckDuckGo search",
+        "useFor": "Web searches with results"
+      },
+      "mcp__web_reader__webReader": {
+        "description": "Fetch and convert URLs to readable format",
+        "useFor": "Reading online documentation"
+      }
+    },
+    "github": {
+      "mcp__github__search_repositories": {
+        "description": "Search GitHub repositories",
+        "useFor": "Finding similar projects"
+      },
+      "mcp__github__search_code": {
+        "description": "Search code across GitHub",
+        "useFor": "Finding code examples"
+      },
+      "mcp__github__search_issues": {
+        "description": "Search GitHub issues",
+        "useFor": "Finding similar bug reports"
+      },
+      "mcp__github__get_file_contents": {
+        "description": "Get file contents from a repo",
+        "useFor": "Reading files from GitHub"
+      },
+      "mcp__github__create_issue": {
+        "description": "Create a GitHub issue",
+        "useFor": "Tracking bugs/features"
+      },
+      "mcp__github__create_pull_request": {
+        "description": "Create a pull request",
+        "useFor": "Submitting code changes"
+      }
+    },
+    "zread": {
+      "mcp__zread__get_repo_structure": {
+        "description": "Get directory structure of a repo",
+        "useFor": "Exploring repo organization"
+      },
+      "mcp__zread__read_file": {
+        "description": "Read full file content from a repo",
+        "useFor": "Reading code from GitHub"
+      },
+      "mcp__zread__search_doc": {
+        "description": "Search documentation in a repo",
+        "useFor": "Finding relevant documentation"
+      }
+    },
+    "image": {
+      "mcp__4_5v_mcp__analyze_image": {
+        "description": "Analyze images with AI vision",
+        "useFor": "Understanding UI designs, screenshots"
+      }
+    },
+    "task": {
+      "Task": {
+        "description": "Launch specialized sub-agents",
+        "subagents": [
+          "general-purpose",
+          "Explore",
+          "Plan",
+          "claude-code-guide"
+        ],
+        "useFor": "Complex multi-step tasks"
+      },
+      "TaskOutput": {
+        "description": "Get output from running tasks",
+        "useFor": "Checking task completion"
+      }
+    },
+    "todo": {
+      "TodoWrite": {
+        "description": "Manage task lists",
+        "useFor": "Tracking progress"
+      }
+    },
+    "question": {
+      "AskUserQuestion": {
+        "description": "Ask the user questions during execution",
+        "useFor": "Clarifying requirements, getting decisions"
+      }
+    }
+  },
+  "agentToolMapping": {
+    "frontend": ["Read", "Write", "Edit", "Glob", "Grep", "LSP", "Bash", "WebSearch"],
+    "backend": ["Read", "Write", "Edit", "Glob", "Grep", "LSP", "Bash"],
+    "mobile": ["Read", "Write", "Edit", "Glob", "Grep", "LSP", "Bash"],
+    "database": ["Read", "Write", "Edit", "Grep", "Bash"],
+    "api-design": ["Read", "Write", "Edit", "Grep"],
+    "security": ["Read", "Grep", "Bash", "WebSearch"],
+    "performance": ["Read", "Grep", "Bash"],
+    "architect": ["Write", "Read", "WebSearch"],
+    "planner": ["Read", "Grep", "Write"],
+    "analyst": ["Read", "Write", "WebSearch"],
+    "researcher": ["WebSearch", "mcp__duckduckgo__search", "mcp__web_reader__webReader", "mcp__github__search_code", "mcp__github__search_repositories"],
+    "competitive": ["mcp__duckduckgo__search", "mcp__github__search_repositories", "mcp__zread__get_repo_structure", "mcp__zread__read_file", "mcp__zread__search_doc", "mcp__web_reader__webReader"],
+    "documentation": ["Read", "Write", "Grep"],
+    "reviewer-code": ["Read", "Grep", "LSP", "Bash"],
+    "reviewer-security": ["Read", "Grep", "Bash", "WebSearch"],
+    "reviewer-performance": ["Read", "Grep", "Bash"],
+    "reviewer-business": ["Read"],
+    "reviewer-ui": ["Read", "Bash"],
+    "testing": ["Read", "Write", "Edit", "Bash"],
+    "fixer": ["Read", "Grep", "LSP", "Bash", "WebSearch"],
+    "config": ["Read", "Write", "Edit", "Bash"],
+    "deps": ["Bash", "Read", "Write", "WebSearch"],
+    "build": ["Read", "Write", "Bash"],
+    "ci-cd": ["Write", "Read", "Bash"],
+    "debugger": ["Read", "Grep", "LSP", "Bash"]
+  }
+}

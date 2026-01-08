@@ -1,0 +1,73 @@
+{
+  "version": "1.0.0",
+  "schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "agent-state",
+  "title": "Agent State",
+  "type": "object",
+  "required": ["id", "type", "status", "spawnTime"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "type": {
+      "type": "string",
+      "description": "Agent type ID"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["idle", "working", "completed", "failed", "terminated"]
+    },
+    "currentTask": {
+      "type": ["string", "null"],
+      "format": "uuid"
+    },
+    "tasksCompleted": {
+      "type": "integer",
+      "default": 0
+    },
+    "tasksFailed": {
+      "type": "integer",
+      "default": 0
+    },
+    "consecutiveFailures": {
+      "type": "integer",
+      "default": 0
+    },
+    "spawnTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lastHeartbeat": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "lastTaskCompleted": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "idleSince": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "errorLog": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "type": "string"
+        },
+        "tokensUsed": {
+          "type": "integer"
+        },
+        "apiCalls": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

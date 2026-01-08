@@ -1,0 +1,135 @@
+# .gitignore - Odin AI Development Agent
+
+# ============================================
+# SİSTEM DOSYALARI (Runtime - Git'e eklenmez)
+# ============================================
+
+# Task Queues (Runtime data)
+.agent/queue/tasks-*.json
+!agent/queue/tasks-schema.json
+
+# State files (Runtime data)
+.agent/state/circuits.json
+.agent/state/orchestrator.json
+.agent/state/agents/
+.agent/state/checkpoints/
+
+# Logs
+.agent/logs/
+*.log
+
+# Memory (Runtime)
+.agent/memory/
+
+# Temporary files
+*.tmp
+*.temp
+*~
+.DS_Store
+Thumbs.db
+
+# ============================================
+# KULLANICIYA ÖZEL DOSYALAR
+# ============================================
+
+# Sistem geliştirme log'u (kullanıcıya özel)
+SYSTEM_IMPROVEMENT_LOG.md
+
+# Local configuration
+.agent/config/local.json
+.local.*
+
+# ============================================
+# IDE VE EDITÖR DOSYALARI
+# ============================================
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+*.iml
+
+# Vim
+*.swp
+*.swo
+*.swn
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ============================================
+# İŞLETİM SİSTEMİ DOSYALARI
+# ============================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+.directory
+
+# ============================================
+# NODE.JS (Proje kullanırsa)
+# ============================================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ============================================
+# PYTHON (Proje kullanırsa)
+# ============================================
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# ============================================
+# BUILD VE DIST
+# ============================================
+
+dist/
+build/
+*.tgz
+
+# ============================================
+# TEST VE COVERAGE
+# ============================================
+
+coverage/
+.nyc_output/
+*.lcov
+
+# ============================================
+# ENVİROMENT DEĞİŞKENLERİ
+# ============================================
+
+.env
+.env.local
+.env.*.local
+
+# ============================================
+# PACKAGING
+# ============================================
+
+*.tar.gz
+*.zip
+package-lock.json
+yarn.lock

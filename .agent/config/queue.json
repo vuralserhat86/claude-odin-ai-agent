@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0",
+  "execution": {
+    "maxParallelAgents": 5,
+    "maxAgentsPerType": 3,
+    "maxConcurrentTasks": 10
+  },
+  "monitoring": {
+    "heartbeatInterval": 60,
+    "heartbeatTimeout": 300,
+    "stuckTimeout": 600,
+    "taskTimeout": 900
+  },
+  "persistence": {
+    "checkpointInterval": 3600,
+    "maxCheckpoints": 24,
+    "autoBackup": true
+  },
+  "queue": {
+    "maxPending": 1000,
+    "maxInProgress": 100,
+    "maxFailed": 100,
+    "maxDeadLetter": 50,
+    "priorityLevels": 10
+  },
+  "scaling": {
+    "scaleUpThreshold": 20,
+    "scaleDownThreshold": 0.3,
+    "scaleUpCount": 2,
+    "idleTimeout": 1800
+  }
+}

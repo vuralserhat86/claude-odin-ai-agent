@@ -1,0 +1,115 @@
+{
+  "version": "1.0.0",
+  "schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "task-schema",
+  "title": "Task Schema",
+  "type": "object",
+  "required": ["id", "type", "agentType", "priority", "description", "payload", "createdAt"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["research", "plan", "code", "test", "review", "fix"]
+    },
+    "agentType": {
+      "type": "string",
+      "description": "Agent ID from config/agents.json"
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10
+    },
+    "description": {
+      "type": "string"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      }
+    },
+    "payload": {
+      "type": "object",
+      "description": "Task-specific data"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "claimedBy": {
+      "type": ["string", "null"],
+      "format": "uuid"
+    },
+    "claimedAt": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "startedAt": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "progress": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "status": {
+      "type": ["string", "null"],
+      "enum": ["pending", "claimed", "in-progress", "completed", "failed"]
+    },
+    "timeout": {
+      "type": "integer",
+      "description": "Timeout in seconds"
+    },
+    "retries": {
+      "type": "integer",
+      "default": 0
+    },
+    "maxRetries": {
+      "type": "integer",
+      "default": 3
+    },
+    "backoffSeconds": {
+      "type": "integer",
+      "default": 60
+    },
+    "lastError": {
+      "type": ["string", "null"]
+    },
+    "completedAt": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "result": {
+      "type": ["object", "null"],
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "filesCreated": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "filesModified": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "output": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object"
+        },
+        "errors": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

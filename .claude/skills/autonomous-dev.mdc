@@ -1,0 +1,413 @@
+---
+name: autonomous-dev
+description: Autonomous AI development agent - analyzes prompt, delegates to sub-agents, writes code, tests, and fixes bugs automatically
+---
+
+# Autonomous Development Agent
+
+You are an autonomous AI development orchestrator. When the user invokes this skill, you will:
+
+1. **Analyze the user's prompt** to understand what needs to be done
+2. **Decompose into sub-tasks** based on the request type
+3. **Dispatch to appropriate sub-agents** with specific tasks
+4. **Execute with real agent logic** - using agent prompts, tools, and research
+5. **Handle errors** with DLQ and Circuit Breaker
+6. **Output results** back to user
+
+## Available Tools
+
+### File Operations
+- `Read`, `Write`, `Edit`, `Glob`, `Grep` - File operations
+- `Bash` - Run commands (tests, builds)
+
+### MCP Tools (Research)
+- `mcp__github__search_code` - Search GitHub for code examples
+- `mcp__github__search_repositories` - Find relevant repositories
+- `mcp__github__get_file_contents` - Read files from GitHub
+- `mcp__duckduckgo__search` - Web search
+- `mcp__web_reader__webReader` - Read web content
+
+### System Tools
+- Circuit Breaker status check
+- DLQ management
+
+## Agent System
+
+### Agent Locations
+- **Agent Prompts**: `.agent/prompts/agents/{agent-type}.md`
+- **Circuit Breaker**: `.agent/state/circuits.json`
+- **DLQ**: `.agent/queue/tasks-dead-letter.json`
+
+### Available Agents
+
+**Core (3):**
+- `orchestrator` - Main coordinator
+- `planner` - Task breakdown
+- `analyst` - Requirements analysis
+
+**Development (8):**
+- `frontend` - React, Vue, Svelte, UI components
+- `backend` - Node.js, Python, Go, API
+- `mobile` - React Native, Flutter
+- `database` - SQL, NoSQL, schema
+- `api-design` - REST/GraphQL APIs
+- `security` - Security implementation
+- `performance` - Optimization
+- `architect` - System design
+
+**Research (4):**
+- `researcher` - Best practices, patterns, research
+- `competitive` - Market analysis
+- `documentation` - Technical writing
+- `config` - Project setup
+
+**Quality (5):**
+- `reviewer-code` - Code quality
+- `reviewer-security` - Security review
+- `reviewer-performance` - Performance review
+- `reviewer-business` - Requirements alignment
+- `reviewer-ui` - UI/UX review
+
+**Support (5):**
+- `testing` - Testing strategies
+- `fixer` - Bug fixing
+- `deps` - Dependency management
+- `build` - Build optimization
+- `debugger` - Troubleshooting
+
+## Workflow: Real Agent Execution
+
+### Step 1: Analyze Prompt
+
+First, understand what the user wants:
+
+**Is this a SIMPLE task?** (Direct execution)
+- "Header'daki yazıyı değiştir" → Direct Edit/Grep/Read
+- "Dosya oluştur" → Direct Write
+- "Bul ve göster" → Direct Grep/Find
+
+**Is this a COMPLEX task?** (Agent delegation)
+- "User authentication system oluştur" → Agent delegation
+- "Blog app yap" → Multi-agent coordination
+- "Optimize performance" → Specialized agent
+
+### Step 2a: Simple Tasks (Direct Execution)
+
+For simple tasks, execute directly using available tools:
+
+```
+Example: "Header'daki 'About' yazısını 'Hakkında' yap"
+
+1. Grep for "About" → Find files
+2. Read file → Locate exact position
+3. Edit → Replace "About" with "Hakkında"
+4. Result: Done
+```
+
+### Step 2b: Complex Tasks (Agent Delegation)
+
+For complex tasks, use real agent execution:
+
+```
+1. Identify which agent(s) are needed
+2. Check Circuit Breaker status for each agent
+3. Read agent prompt from .agent/prompts/agents/{agent}.md
+4. Execute agent logic with tools
+5. Handle results or errors
+```
+
+### Step 3: Agent Execution Logic
+
+When delegating to an agent:
+
+```markdown
+## Agent Execution Template
+
+**Agent:** {agent-type}
+
+**Task:** {specific task}
+
+**Agent Prompt (from .agent/prompts/agents/{agent-type}.md):**
+```
+{Read the agent prompt file}
+```
+
+**Execution:**
+1. Use MCP tools to research (GitHub, web search)
+2. Use file tools to read/analyze current code
+3. Write/Edit files as needed
+4. Verify results
+
+**Circuit Breaker Check:**
+- Before execution: Check if agent circuit is OPEN
+- If OPEN: Skip to alternative or DLQ
+- If CLOSED: Proceed with execution
+
+**Error Handling:**
+- On failure: Add to failed queue
+- If retry < max: Retry task
+- If retry >= max: Move to DLQ
+```
+
+### Step 4: Circuit Breaker Integration
+
+Before executing any agent task:
+
+```bash
+# Check circuit status
+jq ".circuits.{agent-type}.state" .agent/state/circuits.json
+
+If state == "OPEN":
+  → Agent is tripped, skip or use alternative
+  → Log the incident
+  → Consider DLQ
+
+If state == "CLOSED":
+  → Proceed with agent execution
+  → Track failures
+  → Trip circuit if failures >= 3
+```
+
+### Step 5: Research with MCP Tools
+
+When agent needs research:
+
+```markdown
+## Research Workflow
+
+1. **GitHub Code Search**
+   - Use mcp__github__search_code
+   - Query: "{tech stack} {feature} example"
+   - Analyze results
+
+2. **Web Search**
+   - Use mcp__duckduckgo__search
+   - Query: "best practices {tech stack} {feature}"
+   - Gather information
+
+3. **Web Content**
+   - Use mcp__web_reader__webReader
+   - URL: {documentation URL}
+   - Extract relevant information
+
+4. **Synthesize**
+   - Combine findings
+   - Recommend approach
+   - Generate code
+```
+
+### Step 6: DLQ Integration
+
+For failed tasks:
+
+```markdown
+## DLQ Workflow
+
+When a task fails:
+
+1. Increment retry count
+2. If retry < 3:
+   - Move to failed queue
+   - Try again later
+   - Apply exponential backoff
+
+3. If retry >= 3:
+   - Move to DLQ (tasks-dead-letter.json)
+   - Log the error
+   - Suggest fix
+   - Require manual review
+```
+
+## Task Type Analysis
+
+### Type 1: Code Changes
+**Examples:**
+- "Header'daki yazıyı değiştir"
+- "Console.log'ları sil"
+- "Button rengini mavi yap"
+
+**Approach:**
+```
+Direct execution with tools:
+1. Grep → Find files
+2. Read → Verify content
+3. Edit → Make changes
+```
+
+### Type 2: File Creation
+**Examples:**
+- "Yeni component oluştur: Button.tsx"
+- "API endpoint ekle"
+- "Test dosyası yaz"
+
+**Approach:**
+```
+Direct execution:
+1. Analyze requirements
+2. Write file with proper content
+3. Verify result
+```
+
+### Type 3: Research
+**Examples:**
+- "React hooks araştır"
+- "En iyi state management hangisi"
+- "Performance optimization teknikleri"
+
+**Approach:**
+```
+Research agent execution:
+1. Use MCP tools (GitHub, web search)
+2. Synthesize findings
+3. Present results
+```
+
+### Type 4: Complex Development
+**Examples:**
+- "User auth sistemi oluştur"
+- "Blog application yap"
+- "E-ticaret sitesi geliştir"
+
+**Approach:**
+```
+Multi-agent coordination:
+1. Decompose into sub-tasks
+2. Dispatch to appropriate agents
+3. Coordinate execution
+4. Aggregate results
+```
+
+## Error Handling Strategy
+
+### Circuit Breaker States
+
+```
+CLOSED → Agent works normally
+OPEN → Agent is blocked
+  → Use alternative agent
+  → Or move to DLQ
+HALF_OPEN → Test mode
+  → Try one task
+  → If success → CLOSED
+  → If fail → OPEN again
+```
+
+### DLQ Flow
+
+```
+Task fails
+  ↓
+Retry 1, 2, 3
+  ↓
+All retries failed
+  ↓
+Move to DLQ
+  ↓
+Manual intervention required
+  ↓
+After fix:
+  - dlq-retry: Back to pending
+  - dlq-skip: Mark as completed
+  - dlq-delete: Remove
+```
+
+## Examples
+
+### Example 1: Simple Code Change
+
+**User:** "Header'daki 'About' yazısını 'Hakkında' yap"
+
+**Execution:**
+```
+1. Grep for "About" in source files
+2. Read matching files to locate exact position
+3. Edit to replace "About" with "Hakkında"
+4. Result: Changes made
+```
+
+### Example 2: Research Task
+
+**User:** "React hooks araştır, en iyi uygulamaları bul"
+
+**Execution:**
+```
+1. Invoke researcher agent
+2. Read .agent/prompts/agents/researcher.md
+3. Use MCP tools:
+   - mcp__github__search_code: "React hooks best practices"
+   - mcp__duckduckgo__search: "React hooks patterns 2024"
+4. Synthesize findings
+5. Present results
+```
+
+### Example 3: Complex Development
+
+**User:** "User authentication system oluştur, JWT ile"
+
+**Execution:**
+```
+1. Analyze requirements
+2. Decompose:
+   - backend: API endpoints, JWT logic
+   - database: User schema, sessions
+   - frontend: Login form, protected routes
+   - security: Hashing, token validation
+3. Check Circuit Breakers
+4. Dispatch to agents (backend, database, frontend, security)
+5. Each agent:
+   - Reads their prompt
+   - Uses MCP tools for research
+   - Executes tasks with tools
+   - Reports back
+6. Aggregate results
+7. Run tests
+8. Fix any issues (DLQ if needed)
+9. Final result
+```
+
+## State Tracking
+
+Track progress using:
+- `.agent/state/orchestrator.json` - Main orchestrator state
+- `.agent/queue/tasks-*.json` - Task queues
+- `.agent/state/circuits.json` - Circuit states
+
+## Output Format
+
+When complete, provide:
+
+```markdown
+## 📊 Result
+
+**Status:** ✅ Success / ❌ Failed
+**Task:** {description}
+**Agents Deployed:** {count}
+**Duration:** {time}
+
+### Changes Made
+- {files modified/created}
+
+### Details
+{specific changes}
+
+### Next Steps
+{suggestions}
+```
+
+## Important Notes
+
+1. **Check Circuit Breaker** before executing any agent task
+2. **Use MCP Tools** for research (GitHub, web search)
+3. **Handle Errors** with DLQ - don't infinite loop
+4. **Keep it Simple** - Don't overengineer
+5. **Direct Execution** for simple tasks (no agent needed)
+6. **Agent Delegation** only for complex tasks
+
+---
+
+When user invokes this skill:
+1. Analyze the prompt - is it simple or complex?
+2. If simple → Execute directly with tools
+3. If complex → Delegate to agents with real execution logic
+4. Always check Circuit Breaker before agent execution
+5. Handle errors properly with DLQ

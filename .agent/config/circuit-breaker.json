@@ -1,0 +1,147 @@
+{
+  "version": "1.0.0",
+  "description": "Circuit Breaker configuration - prevents cascading failures",
+  "lastUpdated": "2025-01-08T00:00:00Z",
+  "global": {
+    "enabled": true,
+    "maxFailures": 3,
+    "timeout": 300,
+    "resetTimeout": 60,
+    "halfOpenMaxCalls": 1
+  },
+  "thresholds": {
+    "explanation": "Agent-specific thresholds (overrides global if set)",
+    "agents": {
+      "orchestrator": {
+        "maxFailures": 5,
+        "timeout": 600,
+        "note": "Orchestrator has higher threshold"
+      },
+      "planner": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "analyst": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "frontend": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "backend": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "mobile": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "database": {
+        "maxFailures": 2,
+        "timeout": 180,
+        "note": "Database operations - faster timeout"
+      },
+      "api-design": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "security": {
+        "maxFailures": 2,
+        "timeout": 240,
+        "note": "Security - critical operations"
+      },
+      "performance": {
+        "maxFailures": 3,
+        "timeout": 360,
+        "note": "Performance tests may take longer"
+      },
+      "architect": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "researcher": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "competitive": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "documentation": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "config": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "reviewer-code": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "reviewer-security": {
+        "maxFailures": 2,
+        "timeout": 240,
+        "note": "Security review - critical"
+      },
+      "reviewer-performance": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "reviewer-business": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "reviewer-ui": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "testing": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "fixer": {
+        "maxFailures": 4,
+        "timeout": 360,
+        "note": "Fixer gets more attempts"
+      },
+      "deps": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "build": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "ci-cd": {
+        "maxFailures": 3,
+        "timeout": 300
+      },
+      "debugger": {
+        "maxFailures": 3,
+        "timeout": 300
+      }
+    }
+  },
+  "states": {
+    "CLOSED": {
+      "description": "Normal operation - requests flow through",
+      "action": "Allow requests"
+    },
+    "OPEN": {
+      "description": "Circuit tripped - requests blocked",
+      "action": "Fail fast, route to alternative or DLQ"
+    },
+    "HALF_OPEN": {
+      "description": "Testing if service recovered - allow 1 test request",
+      "action": "Allow 1 request to test recovery"
+    }
+  },
+  "recovery": {
+    "strategy": "automatic",
+    "halfOpenCallLimit": 1,
+    "successThreshold": 1,
+    "backoffMultiplier": 1
+  }
+}

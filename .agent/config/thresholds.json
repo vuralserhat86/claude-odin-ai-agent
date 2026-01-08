@@ -1,0 +1,65 @@
+{
+  "version": "1.0.0",
+  "qualityGates": {
+    "tests": {
+      "passing": true,
+      "minCoverage": 80,
+      "framework": "auto-detect"
+    },
+    "review": {
+      "maxCritical": 0,
+      "maxHigh": 0,
+      "maxMedium": 0,
+      "maxLow": 10,
+      "maxCosmetic": 20
+    },
+    "security": {
+      "maxCritical": 0,
+      "maxHigh": 0,
+      "maxMedium": 0
+    },
+    "performance": {
+      "maxLatency": 500,
+      "maxMemory": 512,
+      "maxBundleSize": 1024
+    }
+  },
+  "timeouts": {
+    "default": 300,
+    "analysis": 120,
+    "planning": 180,
+    "research": 240,
+    "code": 600,
+    "test": 900,
+    "review": 300,
+    "fix": 900
+  },
+  "retries": {
+    "max": 5,
+    "backoffBase": 60,
+    "backoffMultiplier": 2,
+    "maxBackoff": 3600
+  },
+  "severityLevels": {
+    "critical": {
+      "action": "block",
+      "description": "Must fix immediately, blocks deployment"
+    },
+    "high": {
+      "action": "block",
+      "description": "Must fix immediately, blocks deployment"
+    },
+    "medium": {
+      "action": "block",
+      "description": "Must fix, blocks deployment"
+    },
+    "low": {
+      "action": "continue",
+      "description": "Add TODO comment, continue"
+    },
+    "cosmetic": {
+      "action": "continue",
+      "description": "Add FIXME comment, continue"
+    }
+  }
+}

@@ -1,0 +1,246 @@
+{
+  "version": "1.0.0",
+  "agents": [
+    {
+      "id": "orchestrator",
+      "type": "orchestrator",
+      "name": "Main Orchestrator",
+      "model": "glm-4.7",
+      "maxConcurrent": 1,
+      "capabilities": ["analyze", "decompose", "coordinate", "monitor"],
+      "promptFile": "prompts/orchestrator.md"
+    },
+    {
+      "id": "planner",
+      "type": "planner",
+      "name": "Strategic Planner",
+      "model": "glm-4.7",
+      "maxConcurrent": 1,
+      "capabilities": ["plan", "dependencies", "timeline", "risk-assessment"],
+      "promptFile": "prompts/agents/planner.md"
+    },
+    {
+      "id": "analyst",
+      "type": "analyst",
+      "name": "Requirements Analyst",
+      "model": "glm-4.7",
+      "maxConcurrent": 1,
+      "capabilities": ["analyze", "tech-stack", "requirements", "risk"],
+      "promptFile": "prompts/agents/analyst.md"
+    },
+    {
+      "id": "frontend",
+      "type": "frontend",
+      "name": "Frontend Developer",
+      "model": "glm-4.7",
+      "maxConcurrent": 3,
+      "capabilities": ["React", "Vue", "Svelte", "TypeScript", "Tailwind", "UI", "UX"],
+      "promptFile": "prompts/agents/frontend.md"
+    },
+    {
+      "id": "backend",
+      "type": "backend",
+      "name": "Backend Developer",
+      "model": "glm-4.7",
+      "maxConcurrent": 3,
+      "capabilities": ["Node.js", "Python", "Go", "API", "REST", "GraphQL", "business-logic"],
+      "promptFile": "prompts/agents/backend.md"
+    },
+    {
+      "id": "database",
+      "type": "database",
+      "name": "Database Developer",
+      "model": "glm-4.7",
+      "maxConcurrent": 2,
+      "capabilities": ["SQL", "NoSQL", "PostgreSQL", "MongoDB", "schema", "migrations", "queries"],
+      "promptFile": "prompts/agents/database.md"
+    },
+    {
+      "id": "api-design",
+      "type": "api-design",
+      "name": "API Designer",
+      "model": "glm-4.7",
+      "maxConcurrent": 2,
+      "capabilities": ["OpenAPI", "REST", "GraphQL", "SDK", "versioning", "webhooks"],
+      "promptFile": "prompts/agents/api-design.md"
+    },
+    {
+      "id": "mobile",
+      "type": "mobile",
+      "name": "Mobile Developer",
+      "model": "glm-4.7",
+      "maxConcurrent": 2,
+      "capabilities": ["React Native", "Flutter", "Swift", "Kotlin", "iOS", "Android"],
+      "promptFile": "prompts/agents/mobile.md"
+    },
+    {
+      "id": "testing",
+      "type": "testing",
+      "name": "QA Engineer",
+      "model": "glm-4.7",
+      "maxConcurrent": 3,
+      "capabilities": ["unit", "integration", "e2e", "coverage", "Jest", "Vitest", "Playwright"],
+      "promptFile": "prompts/agents/testing.md"
+    },
+    {
+      "id": "performance",
+      "type": "performance",
+      "name": "Performance Engineer",
+      "model": "glm-4.7",
+      "maxConcurrent": 2,
+      "capabilities": ["profiling", "optimization", "caching", "benchmarking", "monitoring"],
+      "promptFile": "prompts/agents/performance.md"
+    },
+    {
+      "id": "security",
+      "type": "security",
+      "name": "Security Engineer",
+      "model": "glm-4.7",
+      "maxConcurrent": 2,
+      "capabilities": ["audit", "vulnerability-scan", "OWASP", "auth", "penetration-testing"],
+      "promptFile": "prompts/agents/security.md"
+    },
+    {
+      "id": "researcher",
+      "type": "researcher",
+      "name": "Research Agent",
+      "model": "glm-4.7",
+      "maxConcurrent": 3,
+      "capabilities": ["best-practices", "patterns", "libraries", "documentation"],
+      "promptFile": "prompts/agents/researcher.md"
+    },
+    {
+      "id": "competitive",
+      "type": "competitive",
+      "name": "Competitive Analyst",
+      "model": "glm-4.7",
+      "maxConcurrent": 2,
+      "capabilities": ["competitor-analysis", "feature-gaps", "market-research"],
+      "promptFile": "prompts/agents/competitive.md"
+    },
+    {
+      "id": "documentation",
+      "type": "documentation",
+      "name": "Technical Writer",
+      "model": "glm-4.7",
+      "maxConcurrent": 2,
+      "capabilities": ["api-docs", "guides", "tutorials", "README", "examples"],
+      "promptFile": "prompts/agents/documentation.md"
+    },
+    {
+      "id": "architect",
+      "type": "architect",
+      "name": "System Architect",
+      "model": "glm-4.7",
+      "maxConcurrent": 1,
+      "capabilities": ["system-design", "scalability", "microservices", "patterns"],
+      "promptFile": "prompts/agents/architect.md"
+    },
+    {
+      "id": "reviewer-code",
+      "type": "reviewer-code",
+      "name": "Code Reviewer",
+      "model": "glm-4.7",
+      "maxConcurrent": 3,
+      "capabilities": ["code-quality", "patterns", "SOLID", "maintainability", "clean-code"],
+      "promptFile": "prompts/agents/reviewer-code.md"
+    },
+    {
+      "id": "reviewer-security",
+      "type": "reviewer-security",
+      "name": "Security Reviewer",
+      "model": "glm-4.7",
+      "maxConcurrent": 3,
+      "capabilities": ["vulnerabilities", "auth", "OWASP", "injection", "XSS"],
+      "promptFile": "prompts/agents/reviewer-security.md"
+    },
+    {
+      "id": "reviewer-performance",
+      "type": "reviewer-performance",
+      "name": "Performance Reviewer",
+      "model": "glm-4.7",
+      "maxConcurrent": 3,
+      "capabilities": ["N+1", "memory-leaks", "latency", "optimization"],
+      "promptFile": "prompts/agents/reviewer-performance.md"
+    },
+    {
+      "id": "reviewer-business",
+      "type": "reviewer-business",
+      "name": "Business Logic Reviewer",
+      "model": "glm-4.7",
+      "maxConcurrent": 3,
+      "capabilities": ["requirements", "edge-cases", "business-rules", "validation"],
+      "promptFile": "prompts/agents/reviewer-business.md"
+    },
+    {
+      "id": "reviewer-ui",
+      "type": "reviewer-ui",
+      "name": "UI/UX Reviewer",
+      "model": "glm-4.7",
+      "maxConcurrent": 2,
+      "capabilities": ["UX", "accessibility", "responsive", "design-systems"],
+      "promptFile": "prompts/agents/reviewer-ui.md"
+    },
+    {
+      "id": "config",
+      "type": "config",
+      "name": "Configuration Manager",
+      "model": "glm-4.7",
+      "maxConcurrent": 2,
+      "capabilities": ["package.json", "tsconfig", "ESLint", "Prettier", "configs"],
+      "promptFile": "prompts/agents/config.md"
+    },
+    {
+      "id": "deps",
+      "type": "deps",
+      "name": "Dependency Manager",
+      "model": "glm-4.7",
+      "maxConcurrent": 2,
+      "capabilities": ["dependencies", "updates", "conflicts", "security-audit"],
+      "promptFile": "prompts/agents/deps.md"
+    },
+    {
+      "id": "build",
+      "type": "build",
+      "name": "Build Engineer",
+      "model": "glm-4.7",
+      "maxConcurrent": 2,
+      "capabilities": ["build", "bundle", "optimization", "webpack", "vite"],
+      "promptFile": "prompts/agents/build.md"
+    },
+    {
+      "id": "ci-cd",
+      "type": "ci-cd",
+      "name": "CI/CD Engineer",
+      "model": "glm-4.7",
+      "maxConcurrent": 2,
+      "capabilities": ["GitHub Actions", "workflows", "pipelines", "CI", "CD"],
+      "promptFile": "prompts/agents/ci-cd.md"
+    },
+    {
+      "id": "debugger",
+      "type": "debugger",
+      "name": "Debugging Specialist",
+      "model": "glm-4.7",
+      "maxConcurrent": 2,
+      "capabilities": ["debugging", "error-analysis", "troubleshooting", "logs"],
+      "promptFile": "prompts/agents/debugger.md"
+    },
+    {
+      "id": "fixer",
+      "type": "fixer",
+      "name": "Bug Fixer",
+      "model": "glm-4.7",
+      "maxConcurrent": 2,
+      "capabilities": ["bug-fixing", "error-resolution", "patches", "hotfix"],
+      "promptFile": "prompts/agents/fixer.md"
+    }
+  ],
+  "swarms": {
+    "core": ["orchestrator", "planner", "analyst"],
+    "development": ["frontend", "backend", "database", "api-design", "mobile", "config", "build"],
+    "research": ["researcher", "competitive", "documentation", "architect"],
+    "quality": ["testing", "performance", "security", "reviewer-code", "reviewer-security", "reviewer-performance", "reviewer-business", "reviewer-ui"],
+    "support": ["deps", "ci-cd", "debugger", "fixer"]
+  }
+}

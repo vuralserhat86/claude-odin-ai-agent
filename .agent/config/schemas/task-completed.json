@@ -1,0 +1,50 @@
+{
+  "schema": "completed-task",
+  "version": "1.0.0",
+  "description": "Schema for successfully completed tasks",
+  "example": {
+    "id": "task-uuid-v4",
+    "type": "code",
+    "completedAt": "2025-01-08T12:10:00Z",
+    "completedBy": "frontend-001",
+    "duration": 290,
+    "result": {
+      "success": true,
+      "filesCreated": ["src/components/RegisterForm.tsx"],
+      "filesModified": [],
+      "testsPassed": 5,
+      "testsFailed": 0,
+      "output": "Component created with TypeScript types and Tailwind styling"
+    },
+    "quality": {
+      "codeReviewScore": 85,
+      "testCoverage": 90,
+      "issuesFound": 0
+    }
+  },
+  "fields": {
+    "id": "Unique task identifier",
+    "type": "Task category",
+    "completedAt": "ISO 8601 timestamp when completed",
+    "completedBy": "Agent ID that completed this",
+    "duration": "Seconds from start to completion",
+    "result": {
+      "success": "true/false",
+      "filesCreated": "List of created file paths",
+      "filesModified": "List of modified file paths",
+      "testsPassed": "Number of passing tests",
+      "testsFailed": "Number of failing tests",
+      "output": "Human-readable result description"
+    },
+    "quality": {
+      "codeReviewScore": "0-100 score from code reviewer",
+      "testCoverage": "Percentage test coverage",
+      "issuesFound": "Number of issues found during review"
+    }
+  },
+  "notes": [
+    "Completed tasks are kept for audit trail",
+    "Can be used for analytics and performance metrics",
+    "May be archived after 30 days"
+  ]
+}

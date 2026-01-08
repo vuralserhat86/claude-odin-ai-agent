@@ -1,0 +1,42 @@
+{
+  "schema": "failed-task",
+  "version": "1.0.0",
+  "description": "Schema for tasks that failed and are awaiting retry",
+  "example": {
+    "id": "task-uuid-v4",
+    "type": "code",
+    "failedAt": "2025-01-08T12:15:00Z",
+    "failedBy": "frontend-001",
+    "lastError": {
+      "type": "SyntaxError",
+      "message": "Unexpected token } in src/App.tsx:42",
+      "stack": "..."
+    },
+    "retries": 1,
+    "maxRetries": 3,
+    "availableAt": "2025-01-08T12:16:00Z",
+    "backoff": "Exponential: 60s * 2^retries",
+    "nextRetry": "2025-01-08T12:16:00Z"
+  },
+  "fields": {
+    "id": "Unique task identifier",
+    "type": "Task category",
+    "failedAt": "ISO 8601 timestamp when failed",
+    "failedBy": "Agent ID that was working on this",
+    "lastError": {
+      "type": "Error type (SyntaxError, NetworkError, etc.)",
+      "message": "Human-readable error message",
+      "stack": "Stack trace if available"
+    },
+    "retries": "Current retry count",
+    "maxRetries": "Maximum retries before DLQ",
+    "availableAt": "When task can be retried",
+    "backoff": "Backoff strategy description",
+    "nextRetry": "ISO 8601 timestamp for next retry attempt"
+  },
+  "notes": [
+    "Failed tasks are retried with exponential backoff",
+    "Backoff formula: 60s * 2^retries (60s, 120s, 240s, ...)",
+    "After maxRetries, task moves to dead-letter queue"
+  ]
+}

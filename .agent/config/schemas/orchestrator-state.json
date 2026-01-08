@@ -1,0 +1,94 @@
+{
+  "version": "1.0.0",
+  "schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "orchestrator-state",
+  "title": "Orchestrator State",
+  "type": "object",
+  "required": ["version", "sessionId", "startTime", "currentPhase", "userPrompt", "analysis", "agents", "metrics"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "sessionId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "startTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "currentPhase": {
+      "type": "string",
+      "enum": ["idle", "analyzing", "planning", "developing", "testing", "reviewing", "completed", "failed"]
+    },
+    "userPrompt": {
+      "type": "string"
+    },
+    "analysis": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["web-app", "api", "mobile", "library", "feature", "fix"]
+        },
+        "techStack": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "features": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "complexity": {
+          "type": "string",
+          "enum": ["low", "medium", "high"]
+        },
+        "estimatedTasks": {
+          "type": "integer"
+        }
+      }
+    },
+    "agents": {
+      "type": "object",
+      "properties": {
+        "active": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "idle": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "failed": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "totalSpawned": {
+          "type": "integer"
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "tasksCompleted": {
+          "type": "integer"
+        },
+        "tasksFailed": {
+          "type": "integer"
+        },
+        "tasksPending": {
+          "type": "integer"
+        },
+        "durationSeconds": {
+          "type": "integer"
+        }
+      }
+    },
+    "lastCheckpoint": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

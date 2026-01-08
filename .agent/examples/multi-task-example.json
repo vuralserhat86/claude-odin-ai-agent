@@ -1,0 +1,122 @@
+{
+  "orchestration": {
+    "sessionId": "session-2024-001",
+    "prompt": "Build a complete blog application with user authentication, post creation, and comments",
+    "decomposed": true
+  },
+  "tasks": [
+    {
+      "id": "blog-001",
+      "title": "Design database schema for blog",
+      "type": "development",
+      "subtype": "database",
+      "priority": "critical",
+      "agent": "database",
+      "context": {
+        "entities": ["users", "posts", "comments", "tags"],
+        "relationships": ["users-posts", "posts-comments", "posts-tags"]
+      },
+      "dependencies": []
+    },
+    {
+      "id": "blog-002",
+      "title": "Create authentication API",
+      "type": "development",
+      "subtype": "backend",
+      "priority": "critical",
+      "agent": "backend",
+      "context": {
+        "endpoints": ["register", "login", "logout", "refresh"],
+        "auth": "JWT with refresh tokens"
+      },
+      "dependencies": ["blog-001"]
+    },
+    {
+      "id": "blog-003",
+      "title": "Create posts API",
+      "type": "development",
+      "subtype": "backend",
+      "priority": "high",
+      "agent": "backend",
+      "context": {
+        "endpoints": ["GET /posts", "POST /posts", "GET /posts/:id", "PUT /posts/:id", "DELETE /posts/:id"]
+      },
+      "dependencies": ["blog-001", "blog-002"]
+    },
+    {
+      "id": "blog-004",
+      "title": "Build login/registration UI",
+      "type": "development",
+      "subtype": "frontend",
+      "priority": "high",
+      "agent": "frontend",
+      "context": {
+        "components": ["LoginForm", "RegisterForm", "PasswordReset"],
+        "routes": ["/login", "/register", "/reset-password"]
+      },
+      "dependencies": ["blog-002"]
+    },
+    {
+      "id": "blog-005",
+      "title": "Build post creation UI",
+      "type": "development",
+      "subtype": "frontend",
+      "priority": "high",
+      "agent": "frontend",
+      "context": {
+        "components": ["PostEditor", "MarkdownPreview", "TagSelector"],
+        "routes": ["/posts/new", "/posts/:id/edit"]
+      },
+      "dependencies": ["blog-003"]
+    },
+    {
+      "id": "blog-006",
+      "title": "Add comments feature",
+      "type": "development",
+      "subtype": "fullstack",
+      "priority": "medium",
+      "agent": "backend",
+      "context": {
+        "backend": "Comments API",
+        "frontend": "Comments component"
+      },
+      "dependencies": ["blog-003", "blog-005"]
+    },
+    {
+      "id": "blog-007",
+      "title": "Write tests for authentication",
+      "type": "testing",
+      "subtype": "unit",
+      "priority": "high",
+      "agent": "testing",
+      "dependencies": ["blog-002"]
+    },
+    {
+      "id": "blog-008",
+      "title": "Code review - Backend",
+      "type": "review",
+      "subtype": "code",
+      "priority": "high",
+      "agent": "reviewer-code",
+      "dependencies": ["blog-002", "blog-003"]
+    },
+    {
+      "id": "blog-009",
+      "title": "Security review",
+      "type": "review",
+      "subtype": "security",
+      "priority": "critical",
+      "agent": "reviewer-security",
+      "dependencies": ["blog-002", "blog-003"]
+    },
+    {
+      "id": "blog-010",
+      "title": "Performance review",
+      "type": "review",
+      "subtype": "performance",
+      "priority": "medium",
+      "agent": "reviewer-performance",
+      "dependencies": ["blog-003"]
+    }
+  ]
+}

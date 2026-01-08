@@ -1,0 +1,82 @@
+{
+  "schema": "dead-letter-task",
+  "version": "1.0.0",
+  "description": "Schema for tasks that failed after max retries - require manual review",
+  "example": {
+    "id": "task-uuid-v4",
+    "type": "code",
+    "title": "Create user registration form",
+    "movedAt": "2025-01-08T14:30:00Z",
+    "reason": "Max retries exceeded (3)",
+    "retries": 3,
+    "maxRetries": 3,
+    "lastError": {
+      "type": "ValidationError",
+      "message": "Component 'RegisterForm' already exists in src/components/",
+      "suggestedFix": "Check if component exists, delete it first or skip creation"
+    },
+    "attemptHistory": [
+      {
+        "attempt": 1,
+        "agent": "frontend-001",
+        "startedAt": "2025-01-08T12:00:00Z",
+        "failedAt": "2025-01-08T12:05:00Z",
+        "duration": 300,
+        "error": "Component already exists"
+      },
+      {
+        "attempt": 2,
+        "agent": "frontend-001",
+        "startedAt": "2025-01-08T12:06:00Z",
+        "failedAt": "2025-01-08T12:11:00Z",
+        "duration": 300,
+        "error": "Component already exists"
+      },
+      {
+        "attempt": 3,
+        "agent": "frontend-002",
+        "startedAt": "2025-01-08T14:00:00Z",
+        "failedAt": "2025-01-08T14:05:00Z",
+        "duration": 300,
+        "error": "Component already exists"
+      }
+    ],
+    "requiresManualReview": true,
+    "suggestedActions": [
+      "Check if src/components/RegisterForm.tsx exists",
+      "If exists, either delete it or skip this task",
+      "Alternatively, rename the component to avoid conflict"
+    ],
+    "impact": "Blocks downstream task: task-456 (Create login page)"
+  },
+  "fields": {
+    "id": "Unique task identifier",
+    "type": "Task category",
+    "title": "Short task title",
+    "movedAt": "ISO 8601 timestamp when moved to DLQ",
+    "reason": "Why task is in DLQ",
+    "retries": "Total retry attempts",
+    "maxRetries": "Maximum allowed retries",
+    "lastError": {
+      "type": "Error type",
+      "message": "Error message",
+      "suggestedFix": "Suggested fix for this error"
+    },
+    "attemptHistory": "Array of all retry attempts with details",
+    "requiresManualReview": "true - must be manually reviewed",
+    "suggestedActions": "List of suggested fixes",
+    "impact": "What this task blocks or affects"
+  },
+  "notes": [
+    "Tasks in DLQ are NOT automatically retried",
+    "Must be manually reviewed and either fixed, skipped, or retried",
+    "Can be moved back to pending queue after manual intervention",
+    "Common reasons: Syntax errors, missing dependencies, conflicts"
+  ],
+  "recoveryActions": [
+    "FIX: Fix the issue and move back to pending",
+    "SKIP: Mark as completed if task is no longer needed",
+    "RETRY: Move back to pending for retry (with caution)",
+    "DELETE: Remove task permanently (use with caution)"
+  ]
+}
