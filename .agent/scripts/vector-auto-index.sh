@@ -28,8 +28,8 @@ QUEUE_DIR=".agent/queue"
 STATE_DIR=".agent/state"
 
 # =============================================================================
-// YARDIMCI FONKSİYONLAR
-// =============================================================================
+# YARDIMCI FONKSİYONLAR
+# =============================================================================
 
 print_success() {
     echo -e "${GREEN}✅ $*${NC}"
@@ -48,8 +48,8 @@ print_info() {
 }
 
 # =============================================================================
-// İZLEME FONKSİYONLARI
-// =============================================================================
+# İZLEME FONKSİYONLARI
+# =============================================================================
 
 get_file_checksum() {
     local file="$1"
@@ -70,11 +70,11 @@ check_dependencies() {
 }
 
 # =============================================================================
-// KOMUTLAR
-// =============================================================================
+# KOMUTLAR
+# =============================================================================
 
 cmd_index() {
-    """Tek seferlik indeksleme"""
+    # Tek seferlik indeksleme
     print_info "Vektör indeksi güncelleniyor..."
 
     if [[ -f "$VECTOR_CLI" ]]; then
@@ -86,7 +86,7 @@ cmd_index() {
 }
 
 cmd_watch() {
-    """Sürekli izleme modu"""
+    # Sürekli izleme modu
 
     print_info "Auto-index başlatılıyor..."
     print_info "Queue dizini izleniyor: $QUEUE_DIR"
@@ -163,7 +163,7 @@ cmd_watch() {
 }
 
 cmd_install_hook() {
-    """Git hook kurulumu"""
+    # Git hook kurulumu
 
     print_info "Git hook kurulumu..."
 
@@ -185,7 +185,7 @@ cmd_install_hook() {
 }
 
 cmd_install_cron() {
-    """Cron job kurulumu (Linux/macOS)"""
+    # Cron job kurulumu (Linux/macOS)
 
     print_info "Cron job kurulumu..."
 
@@ -200,7 +200,7 @@ cmd_install_cron() {
 }
 
 cmd_status() {
-    """Durum göster"""
+    # Durum göster
 
     echo "📊 Vektör DB Durumu:"
     echo ""
@@ -270,8 +270,8 @@ EOF
 }
 
 # =============================================================================
-// MAIN
-// =============================================================================
+# MAIN
+# =============================================================================
 
 main() {
     local command="${1:-help}"
