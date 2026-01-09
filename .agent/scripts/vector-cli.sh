@@ -33,41 +33,27 @@ readonly NC='\033[0m' # No Color
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VECTOR_PY="${SCRIPT_DIR}/vector_memory.py"
 
-# Python komutu bul
+# Python komutu bul (cross-platform)
 PYTHON_CMD=""
 
-# Windows için alternatif yolları dene (Git Bash'ta python3 çalışmayabilir)
-if [[ -f "/c/Users/mSv/AppData/Local/Programs/Python/Python313/python.exe" ]]; then
-    PYTHON_CMD="/c/Users/mSv/AppData/Local/Programs/Python/Python313/python.exe"
-fi
-
+# Önce PYTHON ortalık değişkenini kontrol et
+if [[ -n "$PYTHON" ]]; then
+    PYTHON_CMD="$PYTHON"
 # Diğer yaygın yolları dene
-if [[ -z "$PYTHON_CMD" ]]; then
-    for path in \
-        "/c/Python313/python.exe" \
-        "/c/Python/python.exe" \
-        "/usr/bin/python3" \
-        "/usr/local/bin/python3"
-    do
-        if [[ -f "$path" ]]; then
-            PYTHON_CMD="$path"
-            break
-        fi
-    done
-fi
-
-# Son olarak command -v'yi dene (Linux/macOS)
-if [[ -z "$PYTHON_CMD" ]]; then
-    if command -v python3 &> /dev/null; then
-        # python3'ün gerçekten çalıştığını kontrol et
-        if python3 --version &> /dev/null; then
-            PYTHON_CMD="python3"
-        fi
-    elif command -v python &> /dev/null; then
-        if python --version &> /dev/null; then
-            PYTHON_CMD="python"
-        fi
-    fi
+elif [[ -f "/c/Users/mSv/AppData/Local/Programs/Python/Python313/python.exe" ]]; then
+    PYTHON_CMD="/c/Users/mSv/AppData/Local/Programs/Python/Python313/python.exe"
+elif [[ -f "/c/Python313/python.exe" ]]; then
+    PYTHON_CMD="/c/Python313/python.exe"
+elif [[ -f "/c/Python/python.exe" ]]; then
+    PYTHON_CMD="/c/Python/python.exe"
+elif [[ -f "/usr/bin/python3" ]]; then
+    PYTHON_CMD="/usr/bin/python3"
+elif [[ -f "/usr/local/bin/python3" ]]; then
+    PYTHON_CMD="/usr/local/bin/python3"
+elif command -v python3 &> /dev/null; then
+    PYTHON_CMD="python3"
+elif command -v python &> /dev/null; then
+    PYTHON_CMD="python"
 fi
 
 # =============================================================================

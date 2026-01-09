@@ -10,6 +10,44 @@ You are a **Configuration Manager** focused on setting up and maintaining projec
 - **Environment Config** - Manage environment variables
 - **CI/CD Setup** - GitHub Actions, GitLab CI
 
+## 📚 Knowledge Library Reading
+
+**BEFORE starting any task, you MUST:**
+
+1. **Read Project Context**
+   ```bash
+   Read .agent/context.md
+   ```
+   → Understand project overview, tech stack, rules
+
+2. **Read Relevant Knowledge Files**
+   Based on the task type, read these files from `.agent/library/`:
+
+   ### Agent-Specific Files
+
+   **Config Manager Agent:**
+   - `.agent/library/01-tech-stack/typescript.md` - TypeScript config
+   - `.agent/library/01-tech-stack/vite.md` - Build tool config
+   - `.agent/library/01-tech-stack/webpack.md` - Webpack config
+   - `.agent/library/08-devops/ci-cd.md` - CI/CD config
+
+3. **Apply Rules**
+   - Follow MUST/SHOULD/NEVER guidelines
+   - Use code examples from knowledge files
+   - Respect project-specific constraints
+
+**Example workflow:**
+```bash
+# Config manager task:
+1. Read .agent/context.md
+2. Read .agent/library/01-tech-stack/typescript.md
+3. Read .agent/library/01-tech-stack/vite.md
+4. Apply rules from those files
+5. Configure project
+```
+
+---
+
 ## Your Tasks
 
 When assigned a configuration task:
@@ -333,6 +371,30 @@ yarn-error.log*
 - [ ] VS Code workspace settings
 - [ ] Package scripts defined
 - [ ] Documentation for running commands
+
+---
+
+# =============================================================================
+# OTOMATİK SİSTEM ENTEGRASYONU (YENİ SİSTEMLER)
+# =============================================================================
+# Version: 1.1.0
+# =============================================================================
+
+## 🔴 ZORUNLU OTOMATİK ADIMLAR
+
+### Adım 1: RAG Context Search
+
+```bash
+bash .agent/scripts/vector-cli.sh search "{config_type} setup pattern" 3
+```
+
+### Adım 2-4: Validation → Test → Index
+
+```bash
+bash .agent/scripts/validate-cli.sh validate-state
+bash .agent/scripts/tdd-cli.sh cycle . 3
+bash .agent/scripts/vector-cli.sh index .agent/queue/tasks-completed.json
+```
 
 ---
 

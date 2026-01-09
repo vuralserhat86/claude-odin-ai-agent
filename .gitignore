@@ -9,14 +9,18 @@
 !agent/queue/tasks-schema.json
 
 # State files (Runtime data)
-.agent/state/circuits.json
-.agent/state/orchestrator.json
-.agent/state/agents/
+.agent/state/*.json
+.agent/state/*.md
+.agent/state/*.db
 .agent/state/checkpoints/
+.agent/state/agents/
 
 # Logs
 .agent/logs/
 *.log
+*.db
+*.sqlite
+*.sqlite3
 
 # Memory (Runtime)
 .agent/memory/
@@ -38,6 +42,8 @@ SYSTEM_IMPROVEMENT_LOG.md
 # Local configuration
 .agent/config/local.json
 .local.*
+.claude/settings.local.json
+.claude/settings.local.*
 
 # ============================================
 # IDE VE EDITÖR DOSYALARI

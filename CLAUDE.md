@@ -2,7 +2,7 @@
 
 > Bu dosya, Claude AI'nin bu çalışma alanında nasıl davranacağını tanımlar.
 > **Sürüm 1.0** - Otonom AI Geliştirme Orchestrator
-> **Son Güncelleme:** 2025-01-08
+> **Son Güncelleme:** 2026-01-09
 
 ---
 
@@ -997,5 +997,5 @@ Komut: bash .agent/scripts/queue.sh dlq-review
 ---
 
 **Sürüm:** 1.1 - Autonomous AI Development Agent + RAG
-**Son Güncelleme:** 2025-01-09
+**Son Güncelleme:** 2026-01-09
 **Durum:** ✅ Production Ready
