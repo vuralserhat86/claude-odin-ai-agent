@@ -10,10 +10,6 @@
     "duckduckgo": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-duckduckgo"]
-    },
-    "web-reader": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-web-reader"]
     }
   }
 }
