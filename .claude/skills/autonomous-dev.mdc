@@ -104,21 +104,144 @@ Example: "Header'daki 'About' yazısını 'Hakkında' yap"
 4. Result: Done
 ```
 
-### Step 2b: Complex Tasks (Agent Delegation)
+### Step 2b: Complex Tasks (Planning Mode)
 
-For complex tasks, use real agent execution:
+For complex tasks, use PLANNING MODE:
 
 ```
-1. Identify which agent(s) are needed
-2. Check Circuit Breaker status for each agent
-3. Read agent prompt from .agent/prompts/agents/{agent}.md
-4. Execute agent logic with tools
-5. Handle results or errors
+Example: "User authentication system oluştur with JWT"
+
+1. ANALYZE COMPLEXITY
+   - Multi-step required? → Yes
+   - Research needed? → Yes
+   - Multiple agents? → Yes
+
+2. DETERMINE IF QUESTIONS NEEDED (AI DECISION)
+   Are requirements clear?
+   → NO → Ask questions
+   → YES → Create plan directly
+
+3. IF QUESTIONS NEEDED: ASK USER
+   Use AskUserQuestion tool:
+   - "Backend technology?" (Node.js/Python/Go)
+   - "Database?" (PostgreSQL/MongoDB)
+   - "Auth method?" (JWT/Session)
+
+4. CREATE PLAN
+   Based on answers + complexity:
+   - Break down into sub-tasks
+   - Assign agents
+   - Map dependencies
+
+5. GET USER APPROVAL
+   Present plan:
+   "Plan şu:
+   1. Database schema (database agent)
+   2. API endpoints (backend agent)
+   3. Login form (frontend agent)
+
+   Onaylıyor musunuz?"
+
+6. IF APPROVED: EXECUTE
+   - Dispatch to agents
+   - Track progress
+   - Aggregate results
+
+7. IF REJECTED: REVISE
+   - Ask what to change
+   - Update plan
+   - Re-submit for approval
 ```
 
-### Step 3: Agent Execution Logic
+### Planning Decision Tree
 
-When delegating to an agent:
+```
+COMPLEX TASK DETECTED
+        ↓
+   ┌─────────────────────────────────┐
+   │ Requirements Clear?             │
+   │ (All tech stack known?)        │
+   └─────────────────────────────────┘
+        ↓              ↓
+      YES            NO
+        │              │
+        ↓         Ask Questions
+   Create Plan    (AskUserQuestion)
+        │              │
+        │         Get Answers
+        │              │
+        └───────┬──────┘
+                ↓
+         Present Plan
+         (Get Approval)
+                ↓
+         ┌────┴────┐
+         │         │
+      REJECTED  APPROVED
+         │         │
+         │    Execute Agents
+      Revise     │
+         │    Parallel Work
+         │         │
+         └────→ Results
+```
+
+### Example: Planning Mode in Action
+
+**User:** "E-ticaret sitesi geliştir"
+
+**AI Analysis:** Complex, multi-agent, unclear requirements
+
+**Step 1: Ask Questions**
+```
+AskUserQuestion:
+  question: "E-ticaret sitesi için bazı kararlar almamız gerekiyor"
+  options:
+    - React + Next.js + PostgreSQL (Recommended)
+    - Vue + Nuxt + MongoDB
+    - Custom: Other
+```
+
+**User selects:** "React + Next.js + PostgreSQL"
+
+**Step 2: Create Plan**
+```
+Plan:
+1. Database Schema (database agent)
+   - Products, users, orders tables
+   - Relationships and indexes
+
+2. Backend API (backend agent)
+   - Product CRUD endpoints
+   - Cart management
+   - Checkout process
+
+3. Frontend (frontend agent)
+   - Product listing page
+   - Product detail page
+   - Cart and checkout
+
+Total estimated: 8-12 tasks across 3 agents
+```
+
+**Step 3: Get Approval**
+```
+"Bu planı uygulayalım mı? (Evet/Hayır/Ekle)"
+```
+
+**User:** "Evet"
+
+**Step 4: Execute**
+- Dispatch tasks to agents
+- Parallel execution where possible
+- Track completion
+- Present final results
+
+```
+
+### Step 3: Agent Execution (After Planning Approval)
+
+After plan is approved, execute agents:
 
 ```markdown
 ## Agent Execution Template
@@ -402,6 +525,157 @@ When complete, provide:
 4. **Keep it Simple** - Don't overengineer
 5. **Direct Execution** for simple tasks (no agent needed)
 6. **Agent Delegation** only for complex tasks
+
+---
+
+## 🔴 OTOMATİK ENTEGRASYON (YENİ SİSTEMLER)
+
+Sistem tam otomasyon modunda çalışırken aşağıdaki entegrasyonları OTOMATİK yap:
+
+### 1. JSON Validation Entegrasyonu
+
+**Her agent execution öncesi:**
+
+```markdown
+## Validation Check
+
+1. Kod yazdıktan SONRA validation yap:
+   bash .agent/scripts/validate-cli.sh validate-state
+
+2. Eğer validation başarısız olursa:
+   - LLM'a hatayı göster
+   - "Bu JSON hatası var: {error}. Lütfen düzelt."
+   - Retry (max 2 deneme)
+
+3. 3 deneme başarısız olursa → DLQ
+```
+
+### 2. Vector Memory (RAG) Entegrasyonu
+
+**Her agent execution öncesi (sadece complex tasks):**
+
+```markdown
+## RAG Context Search
+
+1. Benzer task'ları ara:
+   bash .agent/scripts/vector-cli.sh search "{task_açıklaması}" 3
+
+2. Bulunan sonuçları context'e ekle:
+   "Önceki benzer task'lar: {sonuçlar}
+    Bu pattern'ları takip et."
+
+3. Agent execution sonrası:
+   bash .agent/scripts/vector-cli.sh index {task_id}
+```
+
+### 3. Autonomous TDD Entegrasyonu
+
+**Kod yazma sonrası OTOMATİK:**
+
+```markdown
+## TDD Auto-Test
+
+1. Framework tespit:
+   bash .agent/scripts/tdd-cli.sh detect .
+
+2. Testleri çalıştır:
+   bash .agent/scripts/tdd-cli.sh test .
+
+3. Eğer test başarısız olursa:
+   bash .agent/scripts/tdd-cli.sh cycle . 3
+
+4. Quality gates kontrol:
+   - Coverage ≥ 80%?
+   - Critical = 0?
+   - High = 0?
+```
+
+### 4. Dashboard Entegrasyonu
+
+**Her işlem sonrası OTOMATİK güncelle:**
+
+```markdown
+## Dashboard Auto-Update
+
+1. Circuit Breaker durumunu kontrol et
+2. Queue durumunu kontrol et
+3. Dashboard'u otomatik render et
+```
+
+---
+
+## 🔄 OTOMATİK WORKFLOW
+
+```
+TASK GELDİ
+    │
+    ▼
+┌─────────────────────────────────────────┐
+│  1. TASK ANALİZİ                       │
+│     Simple mi? → Direct tools          │
+│     Complex mi? → Agent delegation     │
+└─────────────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────────────┐
+│  2. RAG CONTEXT SEARCH                 │
+│     bash vector-cli.sh search "{task}" │
+│     → Benzer task'ları bul             │
+└─────────────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────────────┐
+│  3. CIRCUIT CHECK                      │
+│     bash circuit.sh agent {type}      │
+│     → Agent müsait mi?                 │
+└─────────────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────────────┐
+│  4. AGENT EXECUTION                    │
+│     Agent prompt OKU                   │
+│     → MCP tools ile araştırma          │
+│     → Kod yaz                          │
+└─────────────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────────────┐
+│  5. JSON VALIDATION                    │
+│     bash validate-cli.sh validate-state│
+│     → State dosyaları geçerli mi?      │
+└─────────────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────────────┐
+│  6. TDD TEST                           │
+│     bash tdd-cli.sh cycle . 3          │
+│     → Kod kaliteli mi?                  │
+└─────────────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────────────┐
+│  7. RAG INDEX                          │
+│     bash vector-cli.sh index {task}    │
+│     → Task'i hafızaya ekle             │
+└─────────────────────────────────────────┘
+    │
+    ▼
+SONUÇ KULLANICIYA
+```
+
+---
+
+## 🔴 ZORUNLU OTOMATİK ADIMLAR
+
+**Her agent execution için MECBURİ:**
+
+1. ✅ Circuit Breaker check (önceden var)
+2. ✅ RAG search (YENİ - ekle)
+3. ✅ JSON validation (YENİ - ekle)
+4. ✅ TDD test (YENİ - ekle)
+5. ✅ RAG index (YENİ - ekle)
+
+**Bu adımlar OTOMATİK yapılacak, manuel çağırma GEREKMEZ.**
 
 ---
 

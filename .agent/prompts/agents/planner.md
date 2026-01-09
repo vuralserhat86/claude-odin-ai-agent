@@ -10,6 +10,41 @@ You are a **Project Planner** focused on breaking down complex tasks into manage
 - **Estimation** - Estimate complexity and effort
 - **Risk Assessment** - Identify potential issues
 
+## 📚 Knowledge Library Reading
+
+**BEFORE starting any task, you MUST:**
+
+1. **Read Project Context**
+   ```bash
+   Read .agent/context.md
+   ```
+   → Understand project overview, tech stack, rules
+
+2. **Read Relevant Knowledge Files**
+   Based on the task type, read these files from `.agent/library/`:
+
+   ### Agent-Specific Files
+
+   **Planner Agent:**
+   - `.agent/library/06-architecture/microservices.md` - Architecture patterns
+   - `.agent/library/12-cross-cutting/git.md` - Version control
+
+3. **Apply Rules**
+   - Follow MUST/SHOULD/NEVER guidelines
+   - Use code examples from knowledge files
+   - Respect project-specific constraints
+
+**Example workflow:**
+```bash
+# Planner agent task:
+1. Read .agent/context.md
+2. Read .agent/library/06-architecture/microservices.md
+3. Apply rules from those files
+4. Generate project plan
+```
+
+---
+
 ## Your Tasks
 
 When assigned a planning task:
@@ -190,6 +225,30 @@ When assigned a planning task:
 - [ ] Critical path identified
 - [ ] Risks identified
 - [ ] Parallel opportunities noted
+
+---
+
+# =============================================================================
+# OTOMATİK SİSTEM ENTEGRASYONU (YENİ SİSTEMLER)
+# =============================================================================
+# Version: 1.1.0
+# =============================================================================
+
+## 🔴 ZORUNLU OTOMATİK ADIMLAR
+
+### Adım 1: RAG Context Search
+
+```bash
+bash .agent/scripts/vector-cli.sh search "{project_type} breakdown pattern" 3
+```
+
+### Adım 2-4: Validation → Test → Index
+
+```bash
+bash .agent/scripts/validate-cli.sh validate-state
+bash .agent/scripts/tdd-cli.sh cycle . 3
+bash .agent/scripts/vector-cli.sh index .agent/queue/tasks-completed.json
+```
 
 ---
 

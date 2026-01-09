@@ -69,6 +69,8 @@ Tam otonom çoklu-agent orkestrasyonu ile geliştirme deneyiminizi bir üst sevi
 | **MCP Tools** | GitHub + Web research | Gerçek zamanlı araştırma |
 | **Auto Analysis** | Simple vs Complex task ayrımı | Otomatik routing |
 | **Türkçe** | Tam Türkçe raporlama | Konuşma + Kod yorumları |
+| **RAG** | Vektör tabanlı hafıza | 384 boyutlu embedding |
+| **TDD** | Otonom test döngüsü | Auto-fix + Quality Gates |
 
 ---
 
@@ -224,103 +226,21 @@ USER PROMPT
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 🚀 Hız Karşılaştırması
-
-```
-Manual Development          Agent-Driven Development
-┌─────────────────┐         ┌─────────────────┐
-│ • Research      │  30m    │ • Research      │  2m
-│ • Planning      │  20m    │ • Planning      │  1m
-│ • Coding        │  2h     │ • Coding        │  15m
-│ • Review        │  30m    │ • Review        │  Auto
-│ • Debug         │  45m    │ • Debug         │  Auto
-├─────────────────┤         ├─────────────────┤
-│   Total: 3h 5m  │         │   Total: 18m    │
-└─────────────────┘         └─────────────────┘
-
-      ⚡ 10x Daha Hızlı
-```
-
----
-
-## 📦 Gereksinimler
-
-Odin AI Agent System'i çalıştırmak için aşağıdaki araçlar gereklidir:
-
-### Zorunlu Gereksinimler
-
-| Araç | Versiyon | Açıklama |
-|------|----------|----------|
-| **Claude Code** | Latest | Anthropic'in AI kod editörü |
-| **Git** | 2.0+ | Versiyon kontrol sistemi |
-| **Bash** | 4.0+ | Shell script'leri için |
-| **jq** | 1.6+ | JSON işleme aracı |
-
-### Opsiyonel Gereksinimler
-
-Bu araçlar opsiyonel özellikler için gereklidir:
-
-| Araç | Versiyon | Özellik | Zorunluluk |
-|------|----------|---------|------------|
-| **Python** | 3.8+ | JSON Validasyon, RAG sistemi | Tavsiye edilir |
-| **pip** | Latest | Python paket yöneticisi | Python ile birlikte |
-
-### Python Paketleri (Opsiyonel)
-
-```
-# JSON Validasyon Sistemi için
-pip install pydantic
-
-# Vektör Hafıza Sistemi (RAG) için
-pip install sentence-transformers
-```
-
-### jq Kurulumu
-
-**jq** JSON işleme aracıdır ve zorunludur:
-
-```bash
-# macOS
-brew install jq
-
-# Ubuntu/Debian
-sudo apt-get install jq
-
-# Windows (Chocolatey)
-choco install jq
-
-# Windows (Scoop)
-scoop install jq
-```
-
-### Platform Desteği
-
-| Platform | Durum | Notlar |
-|----------|-------|-------|
-| **Linux** | ✅ Tam Destek | Tüm özellikler çalışır |
-| **macOS** | ✅ Tam Destek | Tüm özellikler çalışır |
-| **Windows (Git Bash)** | ✅ Tam Destek | Git Bash ortamı gerekli |
-| **Windows (PowerShell)** | ⚠️ Sınırlı | Bazı script'ler çalışmayabilir |
-
-### Özellik vs Gereksinim Matrisi
-
-| Özellik | Claude Code | Bash | jq | Python | sentence-transformers |
-|---------|-------------|------|-----|--------|----------------------|
-| **Multi-Agent System** | ✅ | ✅ | ✅ | - | - |
-| **Circuit Breaker** | ✅ | ✅ | ✅ | - | - |
-| **Queue System** | ✅ | ✅ | ✅ | - | - |
-| **Dashboard** | ✅ | ✅ | ✅ | - | - |
-| **TDD System** | ✅ | ✅ | ✅ | - | - |
-| **JSON Validation** | ✅ | ✅ | ✅ | ✅ | - |
-| **Vector Memory (RAG)** | ✅ | ✅ | ✅ | ✅ | ✅ |
-
-> 💡 **İpucu:** Minimum özellikler için sadece **Claude Code + Bash + jq** yeterlidir. Gelişmiş özellikler için Python ekleyin.
-
 ---
 
 ## 🚀 Kurulum
 
-### 🔥 Minimum Kurulum (30 Saniye)
+### 📦 Gereksinimler
+
+| Araç | Versiyon | Zorunluluk |
+|------|----------|-----------|
+| **Claude Code** | Latest | 🔴 Zorunlu |
+| **Git** | 2.0+ | 🔴 Zorunlu |
+| **Bash** | 4.0+ | 🔴 Zorunlu |
+| **jq** | 1.6+ | 🔴 Zorunlu |
+| **Python** | 3.8+ | 🟡 Önerilen |
+
+### 🔥 Hızlı Kurulum (30 Saniye)
 
 ```bash
 # 1. Repoyu klonla
@@ -393,70 +313,108 @@ Detaylı kurulum için [INSTALL.md](INSTALL.md) dosyasına bakın.
 
 ---
 
-### 🔍 Örnek Execution Flow
-
-```
-PROMPT: "User authentication system oluştur, JWT ile"
-    │
-    ▼
-ANALİZ: Complex task → Agent delegation
-    │
-    ▼
-PLANNER: 8 sub-task'a böl
-    ├─ backend: API endpoints (2)
-    ├─ backend: JWT logic (1)
-    ├─ database: User schema (1)
-    ├─ database: Session storage (1)
-    ├─ frontend: Login form (1)
-    ├─ frontend: Register form (1)
-    ├─ security: Password hashing (1)
-    └─ security: Token validation (1)
-    │
-    ▼
-CIRCUIT CHECK: Tüm agent'lar CLOSED ✅
-    │
-    ▼
-PARALLEL EXECUTION (max 5):
-    ├─ backend agent → MCP: GitHub "JWT auth"
-    ├─ database agent → MCP: Web "PostgreSQL user schema"
-    ├─ security agent → MCP: GitHub "bcrypt hashing"
-    ├─ frontend agent → MCP: Web "React form validation"
-    └─ architect agent → System design review
-    │
-    ▼
-QUEUE UPDATE: pending → in-progress → completed
-    │
-    ▼
-SONUÇ: ✅ 8 task tamamlandı, 12 dosya oluşturuldu
-```
-
----
-
 ## 📁 Dosya Yapısı
 
-### 🗂️ Proje Hiyerarşisi
+### 🗂️ Tam Sistem Hiyerarşisi
 
 ```
-odin-ai-agent/
+odin-ai-agent/                      (131 dosya, 27 dizin)
 │
 ├── 📄 README.md                    ← Bu dosya (Tanıtım)
 ├── 📄 CLAUDE.md                    ← Global sistem kuralları
 ├── 📄 INSTALL.md                   ← Kurulum rehberi
 ├── 📄 SESSION_HOOKS.md             ← Session hooks açıklamas
 │
-├── 📂 .agent/                      ← Agent sistemi
-│   ├── 📂 config/                  ← Yapılandırma dosyaları
+├── 📂 .agent/                      ← Agent sistemi (131 dosya)
+│   │
+│   ├── 📂 config/                  ← Yapılandırma (16 dosya)
+│   │   ├── agent-capabilities.json ← Agent yetenek tanımları
+│   │   ├── agents.json             ← Agent konfigürasyonu
 │   │   ├── circuits.json           ← Circuit Breaker ayarları
 │   │   ├── queue.json              ← Queue yapılandırması
-│   │   └── agents.json             ← Agent tanımlamaları
+│   │   ├── quality-gates.yaml      ← TDD quality gates
+│   │   ├── schemas/                ← JSON Schema tanımları (11 dosya)
+│   │   │   ├── agent-state.json
+│   │   │   ├── circuit-state.json
+│   │   │   ├── task.json
+│   │   │   ├── dlq-entry.json
+│   │   │   ├── metrics.json
+│   │   │   └─ ...
+│   │   └── version.json            ← Sistem versiyonu
 │   │
-│   ├── 📂 prompts/                 ← Agent prompt'ları
-│   │   └── 📂 agents/              ← 25 agent prompt dosyası
-│   │       ├── 📄 core/
+│   ├── 📂 library/                 ← Knowledge Base (51 dosya)
+│   │   ├── README.md               ← Library indeksi
+│   │   ├── 01-tech-stack/          ← Tech stack rehberi (6 dosya)
+│   │   │   ├── go.md
+│   │   │   ├── java.md
+│   │   │   ├── nodejs.md
+│   │   │   ├── python.md
+│   │   │   ├── rust.md
+│   │   │   └── typescript.md
+│   │   ├── 02-backend/             ← Backend best practices (4 dosya)
+│   │   │   ├── api-design.md
+│   │   │   ├── authentication.md
+│   │   │   ├── python.md
+│   │   │   └── security.md
+│   │   ├── 03-database/            ← Database patterns (3 dosya)
+│   │   │   ├── migrations.md
+│   │   │   ├── nosql.md
+│   │   │   └── sql.md
+│   │   ├── 04-testing/             ← Testing stratejileri (5 dosya)
+│   │   │   ├── e2e-test.md
+│   │   │   ├── integration-test.md
+│   │   │   ├── load-test.md
+│   │   │   ├── tdd.md
+│   │   │   └── unit-test.md
+│   │   ├── 05-patterns/            ← Design patterns (5 dosya)
+│   │   │   ├── caching.md
+│   │   │   ├── circuit-breaker.md
+│   │   │   ├── error-handling.md
+│   │   │   ├── retry-patterns.md
+│   │   │   └── state-management.md
+│   │   ├── 06-architecture/        ← Architecture patterns (4 dosya)
+│   │   │   ├── clean-architecture.md
+│   │   │   ├── event-driven.md
+│   │   │   ├── hexagonal.md
+│   │   │   └── microservices.md
+│   │   ├── 07-quality/             ← Code quality (4 dosya)
+│   │   │   ├── clean-code.md
+│   │   │   ├── code-style.md
+│   │   │   ├── naming-conventions.md
+│   │   │   └── refactoring.md
+│   │   ├── 08-devops/              ← DevOps practices (4 dosya)
+│   │   │   ├── cicd.md
+│   │   │   ├── docker.md
+│   │   │   ├── kubernetes.md
+│   │   │   └── monitoring.md
+│   │   ├── 10-ai-ml/               ← AI/ML patterns (4 dosya)
+│   │   │   ├── fine-tuning.md
+│   │   │   ├── llm-best-practices.md
+│   │   │   ├── prompt-engineering.md
+│   │   │   └── rag-patterns.md
+│   │   ├── 11-languages/           ← Dil spesifik (4 dosya)
+│   │   │   ├── csharp.md
+│   │   │   ├── go.md
+│   │   │   ├── java.md
+│   │   │   └── rust.md
+│   │   └── 12-cross-cutting/       ← Cross-cutting concerns (8 dosya)
+│   │       ├── api-design.md
+│   │       ├── authentication.md
+│   │       ├── caching.md
+│   │       ├── git.md
+│   │       ├── logging.md
+│   │       ├── security.md
+│   │       ├── testing.md
+│   │       └── validation.md
+│   │
+│   ├── 📂 prompts/                 ← Prompt tanımları (26 dosya)
+│   │   ├── orchestrator.md         ← Ana orchestrator (429 satır)
+│   │   └── agents/                 ← 25 agent prompt (25 dosya)
+│   │       ├── 📂 core/            (3 dosya)
 │   │       │   ├── orchestrator.md
 │   │       │   ├── planner.md
 │   │       │   └── analyst.md
-│   │       ├── 📄 development/
+│   │       ├── 📂 development/     (8 dosya)
 │   │       │   ├── frontend.md
 │   │       │   ├── backend.md
 │   │       │   ├── mobile.md
@@ -465,59 +423,89 @@ odin-ai-agent/
 │   │       │   ├── security.md
 │   │       │   ├── performance.md
 │   │       │   └── architect.md
-│   │       ├── 📄 research/
+│   │       ├── 📂 research/        (4 dosya)
 │   │       │   ├── researcher.md
 │   │       │   ├── competitive.md
 │   │       │   ├── documentation.md
 │   │       │   └── config.md
-│   │       ├── 📄 quality/
+│   │       ├── 📂 quality/         (5 dosya)
 │   │       │   ├── reviewer-code.md
 │   │       │   ├── reviewer-security.md
 │   │       │   ├── reviewer-performance.md
 │   │       │   ├── reviewer-business.md
 │   │       │   └── reviewer-ui.md
-│   │       └── 📄 support/
+│   │       └── 📂 support/         (5 dosya)
 │   │           ├── testing.md
 │   │           ├── fixer.md
 │   │           ├── deps.md
 │   │           ├── build.md
 │   │           └── debugger.md
 │   │
-│   ├── 📂 queue/                   ← Task yönetimi
-│   │   ├── tasks-pending.json      ← Bekleyen task'lar
-│   │   ├── tasks-in-progress.json  ← Sürmekte olan task'lar
-│   │   ├── tasks-completed.json    ← Tamamlanan task'lar
-│   │   ├── tasks-failed.json       ← Başarısız task'lar
-│   │   └── tasks-dead-letter.json  ← DLQ (retry sonrası başarısız)
+│   ├── 📂 scripts/                 ← Sistem script'leri (23 dosya)
+│   │   ├── orchestrate.sh          ← Orchestratör komutları
+│   │   ├── circuit.sh              ← Circuit Breaker yönetimi
+│   │   ├── queue.sh                ← Queue yönetimi
+│   │   ├── dashboard.sh            ← Terminal dashboard
+│   │   │
+│   │   ├── Python Script'ler (8):
+│   │   │   ├── scanner.py          ← Dosya tarayıcı
+│   │   │   ├── validate.py         ← JSON validasyon
+│   │   │   ├── schemas.py          ← Pydantic schemalar
+│   │   │   ├── autonomous_tdd.py   ← TDD sistemi
+│   │   │   └── vector_memory.py    ← RAG vektör hafıza
+│   │   │
+│   │   ├── CLI Wrapper'lar (3):
+│   │   │   ├── validate-cli.sh     ← Validasyon CLI
+│   │   │   ├── tdd-cli.sh          ← TDD CLI
+│   │   │   └── vector-cli.sh       ← RAG CLI
+│   │   │
+│   │   ├── Test Script'leri (5):
+│   │   │   ├── test-circuit.sh     ← Circuit test
+│   │   │   ├── test-queue.sh       ← Queue test
+│   │   │   ├── test-mcp.sh         ← MCP tools test
+│   │   │   ├── test-validation.sh  ← Validasyon test
+│   │   │   └── test-rag.sh         ← RAG test
+│   │   │
+│   │   └── Utility Script'ler (6):
+│   │       ├── check-health.sh     ← Sistem sağlığı
+│   │       ├── setup-hooks.sh      ← Git hooks kurulum
+│   │       ├── vector-auto-index.sh← Otomatik indeksleme
+│   │       ├── backup-state.sh     ← State yedekleme
+│   │       ├── restore-state.sh    ← State geri yükleme
+│   │       └── reset-system.sh     ← Sistem sıfırlama
 │   │
-│   ├── 📂 state/                   ← Sistem durumu
-│   │   ├── circuits.json           ← Circuit Breaker durumları
+│   ├── 📂 state/                   ← Runtime state (5 dosya)
+│   │   ├── circuits.json           ← Circuit durumları
 │   │   ├── metrics.json            ← Performans metrikleri
-│   │   └── health.json             ← Sistem sağlık durumu
+│   │   ├── health.json             ← Sistem sağlık durumu
+│   │   ├── checkpoints/            ← Checkpoint'ler
+│   │   └── agents/                 ← Agent spesifik state
 │   │
-│   └── 📂 scripts/                 ← Yönetim script'leri
-│       ├── circuit.sh              ← Circuit Breaker yönetimi
-│       ├── queue.sh                ← Queue yönetimi
-│       └── orchestrate.sh          ← Orchestratör komutları
+│   └── 📂 queue/                   ← Task queue'leri (5 dosya)
+│       ├── tasks-pending.json      ← Bekleyen task'lar
+│       ├── tasks-in-progress.json  ← Sürmekte olan task'lar
+│       ├── tasks-completed.json    ← Tamamlanan task'lar
+│       ├── tasks-failed.json       ← Başarısız task'lar
+│       └── tasks-dead-letter.json  ← DLQ (retry sonrası başarısız)
 │
 └── 📂 .claude/                     ← Claude Code config
     └── 📂 skills/
-        └── 📄 autonomous-dev.mdc   ← Ana orchestrator skill
+        └── 📄 autonomous-dev.mdc   ← Ana orchestrator skill (688 satır)
 ```
 
-### 📄 Dosya Açıklamaları
+### 📄 Kritik Dosyalar
 
 | Dosya/Dizin | Açıklama | Kritiklik |
 |-------------|----------|-----------|
 | `CLAUDE.md` | Global sistem kuralları (Türkçe raporlama, task analizi vb.) | 🔴 ZORUNLU |
-| `INSTALL.md` | Detaylı kurulum rehberi | 🟡 ÖNERİLEN |
+| `.claude/skills/autonomous-dev.mdc` | Ana orchestrator skill | 🔴 ZORUNLU |
+| `.agent/prompts/orchestrator.md` | Ana orchestrator prompt (429 satır) | 🔴 ZORUNLU |
 | `.agent/prompts/agents/*.md` | 25 agent'in prompt tanımlamaları | 🔴 ZORUNLU |
 | `.agent/config/circuits.json` | Circuit Breaker threshold'ları | 🔴 ZORUNLU |
-| `.agent/config/queue.json` | Queue yapılandırması | 🔴 ZORUNLU |
 | `.agent/state/circuits.json` | Canlı circuit durumları | 🔴 ZORUNLU (otomatik) |
 | `.agent/queue/tasks-*.json` | Task queue durumları | 🔴 ZORUNLU (otomatik) |
-| `.claude/skills/autonomous-dev.mdc` | Ana orchestrator skill | 🔴 ZORUNLU |
-| `.agent/scripts/*.sh` | Yönetim script'leri | 🟡 ÖNERİLEN |
+| `.agent/scripts/*.sh` | Yönetim script'leri (23 script) | 🟡 ÖNERİLEN |
+| `.agent/library/` | Knowledge base (51 dosya) | 🟡 ÖNERİLEN |
 
 ---
 
@@ -602,74 +590,12 @@ odin-ai-agent/
 │                                    │   queue.sh dlq-review    │  │
 │                                    └─────────────────────────┘  │
 │                                                                  │
-│  DLQ Schema:                                                     │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │ {                                                       │   │
-│  │   "id": "task-uuid",                                   │   │
-│  │   "reason": "Max retries exceeded (3)",                │   │
-│  │   "lastError": {                                       │   │
-│  │     "type": "ValidationError",                         │   │
-│  │     "message": "Component already exists",             │   │
-│  │     "suggestedFix": "Delete or skip"                  │   │
-│  │   },                                                   │   │
-│  │   "attemptHistory": [...],                             │   │
-│  │   "requiresManualReview": true,                        │   │
-│  │   "suggestedActions": [...]                            │   │
-│  │ }                                                       │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                  │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
 ### 🔌 MCP Tools Integration
-
-**Amaç:** Gerçek zamanlı araştırma ve kod örnekleri bulma.
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    MCP TOOLS ECOSYSTEM                          │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  GITHUB CODE SEARCH                                     │   │
-│  │  Tool: mcp__github__search_code                         │   │
-│  │                                                          │   │
-│  │  Query Examples:                                        │   │
-│  │  • "React hooks useState pattern"                       │   │
-│  │  • "JWT authentication Node.js"                         │   │
-│  │  • "PostgreSQL user schema example"                     │   │
-│  │                                                          │   │
-│  │  Output: Gerçek kod örnekleri + Best practices          │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                  │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  WEB SEARCH (DuckDuckGo)                                │   │
-│  │  Tool: mcp__duckduckgo__search                          │   │
-│  │                                                          │   │
-│  │  Query Examples:                                        │   │
-│  │  • "best practices React 2024"                          │   │
-│  │  • "TypeScript performance tips"                        │   │
-│  │  • "Docker container optimization"                      │   │
-│  │                                                          │   │
-│  │  Output: Güncel bilgiler + Dokümantasyon linkleri       │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                  │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  WEB CONTENT READER                                     │   │
-│  │  Tool: mcp__web_reader__webReader                       │   │
-│  │                                                          │   │
-│  │  Examples:                                              │   │
-│  │  • React官方文档                                         │   │
-│  │  • MDN Web Docs                                         │   │
-│  │  • Node.js API Reference                                │   │
-│  │                                                          │   │
-│  │  Output: Markdown formatında okunmuş içerik            │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
 
 **Araştırma Workflow:**
 
@@ -704,58 +630,13 @@ Agent Research Yapacak:
 
 **25 Uzman Agent**
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      25 SPECIALIZED AGENT                       │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  CORE (3) - Ana Koordinatör                             │   │
-│  │  • orchestrator - Ana orkestratör                       │   │
-│  │  • planner - Task planlama                             │   │
-│  │  • analyst - Sistem analizi                            │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                  │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  DEVELOPMENT (8) - Geliştirme Agent'ları                │   │
-│  │  • frontend - Frontend geliştirme                      │   │
-│  │  • backend - Backend geliştirme                        │   │
-│  │  • mobile - Mobil geliştirme                           │   │
-│  │  • database - Veritabanı tasarımı                      │   │
-│  │  • api-design - API tasarımı                           │   │
-│  │  • security - Güvenlik implementasyonu                 │   │
-│  │  • performance - Performans optimizasyonu              │   │
-│  │  • architect - Sistem mimarisi                         │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                  │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  RESEARCH (4) - Araştırma Agent'ları                    │   │
-│  │  • researcher - Teknik araştırma                       │   │
-│  │  • competitive - Rekabet analizi                        │   │
-│  │  • documentation - Dokümantasyon                        │   │
-│  │  • config - Konfigürasyon araştırması                   │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                  │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  QUALITY (5) - Kalite Kontrol Agent'ları               │   │
-│  │  • reviewer-code - Kod review                          │   │
-│  │  • reviewer-security - Güvenlik review                 │   │
-│  │  • reviewer-performance - Performans review             │   │
-│  │  • reviewer-business - İş gereksinimleri review         │   │
-│  │  • reviewer-ui - UI/UX review                          │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                  │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  SUPPORT (5) - Destek Agent'ları                        │   │
-│  │  • testing - Test yazımı                                │   │
-│  │  • fixer - Bug fixing                                  │   │
-│  │  • deps - Dependency yönetimi                          │   │
-│  │  • build - Build sistemleri                            │   │
-│  │  • debugger - Debugging                                 │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
+| Kategori | Agent Sayısı | Agent'lar |
+|----------|--------------|-----------|
+| **Core** | 3 | orchestrator, planner, analyst |
+| **Development** | 8 | frontend, backend, mobile, database, api-design, security, performance, architect |
+| **Research** | 4 | researcher, competitive, documentation, config |
+| **Quality** | 5 | reviewer-code, reviewer-security, reviewer-performance, reviewer-business, reviewer-ui |
+| **Support** | 5 | testing, fixer, deps, build, debugger |
 
 ---
 
@@ -782,97 +663,33 @@ bash .agent/scripts/circuit.sh trip backend
 bash .agent/scripts/circuit.sh reset backend
 ```
 
-**Çıktı Örneği:**
-```
-╔════════════════════════════════════════════════════════════════╗
-║                    CIRCUIT BREAKER STATUS                       ║
-╠════════════════════════════════════════════════════════════════╣
-║                                                                  ║
-║  Total Circuits:     26                                          ║
-║  Closed (Active):    24  ✅                                      ║
-║  Open (Blocked):     1   🔴                                      ║
-║  Half-Open (Test):   1   🟡                                      ║
-║                                                                  ║
-║  Blocked Agents:                                                 ║
-║  • database 🔴 - 3 failures (retry in 45s)                      ║
-║                                                                  ║
-║  Testing Agents:                                                ║
-║  • security 🟡 - Testing recovery (1/1 tasks)                   ║
-║                                                                  ║
-╚════════════════════════════════════════════════════════════════╝
-```
-
----
-
 #### Queue Yönetimi
 
 ```bash
 # Tüm queue durumları
 bash .agent/scripts/queue.sh status
 
-# Pending tasks
+# Pending/In-Progress/Completed/Failed/DLQ tasks
 bash .agent/scripts/queue.sh pending
-
-# In-progress tasks
 bash .agent/scripts/queue.sh in-progress
-
-# Completed tasks
 bash .agent/scripts/queue.sh completed
-
-# Failed tasks
 bash .agent/scripts/queue.sh failed
-
-# DLQ tasks
 bash .agent/scripts/queue.sh dlq
 
-# DLQ detaylı inceleme
-bash .agent/scripts/queue.sh dlq-review
-
-# Task'ı pending'e geri al (retry)
-bash .agent/scripts/queue.sh dlq-retry <task-id>
-
-# Task'ı atla (completed olarak işaretle)
-bash .agent/scripts/queue.sh dlq-skip <task-id>
-
-# Task'ı sil
-bash .agent/scripts/queue.sh dlq-delete <task-id>
+# DLQ yönetimi
+bash .agent/scripts/queue.sh dlq-review      # Detaylı inceleme
+bash .agent/scripts/queue.sh dlq-retry <id>   # Retry
+bash .agent/scripts/queue.sh dlq-skip <id>    # Atla
+bash .agent/scripts/queue.sh dlq-delete <id>  # Sil
 ```
-
-**Çıktı Örneği:**
-```
-╔════════════════════════════════════════════════════════════════╗
-║                         QUEUE STATUS                            ║
-╠════════════════════════════════════════════════════════════════╣
-║                                                                  ║
-║  ┌────────────────────────────────────────────────────────┐    ║
-║  │  PENDING          │  IN-PROGRESS  │  COMPLETED         │    ║
-║  │  Count: 3         │  Count: 2     │  Count: 147        │    ║
-║  │  └─ Task #151     │  └─ Task #149 │  └─ Last: #150     │    ║
-║  │  └─ Task #152     │  └─ Task #148 │                    │    ║
-║  │  └─ Task #153     │               │                    │    ║
-║  └────────────────────────────────────────────────────────┘    ║
-║                                                                  ║
-║  ┌────────────────────────────────────────────────────────┐    ║
-║  │  FAILED          │  DLQ                                  │    ║
-║  │  Count: 1         │  Count: 0                             │    ║
-║  │  └─ Task #144     │  ✅ No dead letters                   │    ║
-║  │     (Retrying)    │                                       │    ║
-║  └────────────────────────────────────────────────────────┘    ║
-║                                                                  ║
-╚════════════════════════════════════════════════════════════════╝
-```
-
----
 
 #### JSON Validasyon Sistemi
-
-**Yeni özellik:** Deterministik veri bütünlüğü için JSON schema validasyonu.
 
 ```bash
 # Tüm state dosyalarını validate et
 bash .agent/scripts/validate-cli.sh validate-state
 
-# Tek bir dosya validate et
+# Tek dosya validate et
 bash .agent/scripts/validate-cli.sh validate .agent/state/circuits.json
 
 # Tüm kritik dosyaları validate et
@@ -881,9 +698,6 @@ bash .agent/scripts/validate-cli.sh validate-all
 # Retry durumlarını gör
 bash .agent/scripts/validate-cli.sh retry-status
 
-# Retry sayacını sıfırla
-bash .agent/scripts/validate-cli.sh retry-reset .agent/queue/tasks-pending.json
-
 # JSON Schema export
 bash .agent/scripts/validate-cli.sh export-schemas
 
@@ -891,53 +705,7 @@ bash .agent/scripts/validate-cli.sh export-schemas
 bash .agent/scripts/validate-cli.sh test
 ```
 
-**Validasyon Katmanı:**
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    JSON VALIDATION LAYER                        │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  LLM Output → Pydantic Validation → State Files                  │
-│                  │                                              │
-│                  ├─ Circuit State Schema                        │
-│                  ├─ Task Queue Schema                           │
-│                  ├─ DLQ Schema                                  │
-│                  └─ Orchestrator State Schema                   │
-│                                                                  │
-│  Recovery Strategy:                                             │
-│  • Retry 0-1:   Otomatik retry (LLM'a hata gösterilir)           │
-│  • Retry 2-4:   DLQ'ya al (manuel müdahale gerekli)              │
-│  • Retry 5+:    Kullanıcı müdahalesi zorunlu                     │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-**Korunan Dosyalar:**
-- `.agent/state/circuits.json` - Circuit Breaker state
-- `.agent/queue/tasks-pending.json` - Pending task queue
-- `.agent/queue/tasks-in-progress.json` - In-progress task queue
-- `.agent/queue/tasks-completed.json` - Completed task history
-- `.agent/queue/tasks-failed.json` - Failed task queue
-- `.agent/queue/tasks-dead-letter.json` - DLQ
-
-**Komutlar:**
-
-```bash
-# Python ile direkt kullanım
-python .agent/scripts/validate.py validate-state
-python .agent/scripts/validate.py validate .agent/state/circuits.json
-
-# Bash wrapper ile kullanım
-bash .agent/scripts/validate-cli.sh validate-state
-bash .agent/scripts/validate-cli.sh retry-status
-```
-
----
-
 #### Vektör Hafıza Sistemi (RAG)
-
-**Yeni özellik:** Vektör tabanlı hafıza ile semantik arama.
 
 ```bash
 # İlk indeksleme (tamamlanmış task'lar)
@@ -960,60 +728,9 @@ bash .agent/scripts/vector-auto-index.sh install hook
 bash .agent/scripts/vector-cli.sh help
 ```
 
-**RAG Sistemi:**
+**Dependency:** `pip install sentence-transformers`
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    VECTOR MEMORY (RAG)                          │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  1. INDEXING (Bir kere yapılır)                                 │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  Task: "JWT authentication implementation"               │   │
-│  │       ↓                                                  │   │
-│  │  Embedding Model: [0.23, -0.45, 0.67, ...]  (384 boyut) │   │
-│  │       ↓                                                  │   │
-│  │  Vektör DB'ye kaydet                                    │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                  │
-│  2. RETRIEVAL (Yeni task'te)                                   │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  Yeni Task: "OAuth2 login system"                       │   │
-│  │       ↓                                                  │   │
-│  │  Vektör Arama: "En benzer 5 task"                       │   │
-│  │       ↓                                                  │   │
-│  │  Sonuç:                                                 │   │
-│  │    1. JWT auth (0.92 benzerlik)                         │   │
-│  │    2. Session management (0.85 benzerlik)              │   │
-│  │    3. Password hashing (0.78 benzerlik)                │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                  │
-│  Faydalar:                                                      │
-│  • Proje büyüse bile hız sabit kalır                           │
-│  • Token kullanımı %90 azalır                                 │
-│  • Eski decision'lar unutulmaz                                │
-│  • Tutarlı kod üretimi                                        │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-**Dependency:**
-
-```bash
-pip install sentence-transformers
-```
-
-**Dosyalar:**
-- `.agent/state/vector-memory.db` - Vektör veritabanı
-- `.agent/scripts/vector_memory.py` - Core modül
-- `.agent/scripts/vector-cli.sh` - CLI wrapper
-- `.agent/scripts/vector-auto-index.sh` - Otomatik indeksleme
-
----
-
-#### Otonom TDD Sistemi (Test-Driven Development)
-
-**Yeni özellik:** TDD metodolojisi ile otonom test döngüsü.
+#### Otonom TDD Sistemi
 
 ```bash
 # Framework tespiti
@@ -1035,84 +752,18 @@ bash .agent/scripts/tdd-cli.sh watch <project_path>
 bash .agent/scripts/tdd-cli.sh help
 ```
 
-**TDD Sistemi:**
+#### Dashboard
 
+```bash
+# Tek seferlik göster
+bash .agent/scripts/dashboard.sh
+
+# Auto-refresh modu (5 saniyede bir)
+bash .agent/scripts/dashboard.sh --watch
+
+# Interactive mod (menü ile yönetim)
+bash .agent/scripts/dashboard.sh --loop
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    AUTONOMOUS TDD SYSTEM                        │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  1. FRAMEWORK TESPİTİ                                           │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  Proje tarama → Framework tespit                        │   │
-│  │  • package.json → Jest/Vitest/Mocha                     │   │
-│  │  • pytest.ini → Pytest                                 │   │
-│  │  • go.mod → go test                                    │   │
-│  │  • Cargo.toml → cargo test                             │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                  │
-│  2. TEST ÇALIŞTIRMA                                             │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  Framework'a uygun komut → Test çalıştır               │   │
-│  │  • Jest: npm test -- --coverage                        │   │
-│  │  • Pytest: pytest --cov=. -v                           │   │
-│  │  • Go: go test -v -cover                               │   │
-│  │  • Rust: cargo test                                    │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                  │
-│  3. QUALITY GATES                                               │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  Sonuçları değerlendir:                                 │   │
-│  │  ✓ Coverage ≥ 80%                                      │   │
-│  │  ✓ Critical = 0                                        │   │
-│  │  ✓ High = 0                                            │   │
-│  │  ✓ Medium ≤ 3                                          │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                  │
-│  4. AUTO-FIX DÖNGÜSÜ                                            │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  Test başarısız → Kodu analiz et → Düzelt → Retry      │   │
-│  │  Deneme 1 (60s) → Deneme 2 (120s) → Deneme 3 (240s)    │   │
-│  │  Tüm denemeler başarısız → DLQ'ya gönder               │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                  │
-│  Faydalar:                                                      │
-│  • Test-First Development (TDD) prensibi                         │
-│  • Otomatik test framework tespiti                               │
-│  • Quality gates ile kalite kontrolü                            │
-│  • Auto-fix ile kendi kendini düzelten kod                      │
-│  • Coverage takibi                                              │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-**Quality Gates (.agent/config/quality-gates.yaml):**
-
-| Kriter | Değer | Açıklama |
-|--------|-------|----------|
-| **Coverage** | ≥80% | Kod kapsama oranı |
-| **Critical Hata** | 0 | Sıfır kritik hata |
-| **High Hata** | 0 | Sıfır yüksek öncelikli hata |
-| **Medium Hata** | ≤3 | Maksimum 3 orta hata |
-| **Low Hata** | ≤10 | Maksimum 10 düşük hata |
-| **Test Timeout** | 60s | Test süresi limiti |
-
-**Desteklenen Framework'ler:**
-
-| Dil | Framework'ler |
-|-----|---------------|
-| JavaScript/TypeScript | Jest, Vitest, Mocha |
-| Python | Pytest |
-| Go | go test |
-| Rust | cargo test |
-
-**Dosyalar:**
-- `.agent/scripts/autonomous_tdd.py` - Core TDD modülü
-- `.agent/scripts/tdd-cli.sh` - CLI wrapper
-- `.agent/config/quality-gates.yaml` - Quality gates yapılandırması
-- `.agent/prompts/agents/testing.md` - Testing agent prompt (TDD kuralları)
-
----
 
 #### Orchestrator Komutları
 
@@ -1129,74 +780,6 @@ bash .agent/scripts/orchestrate.sh find "*.tsx"
 # Uzantıya göre listeleme
 bash .agent/scripts/orchestrate.sh list tsx
 ```
-
----
-
-#### Dashboard
-
-**Yeni özellik:** Terminal tabanlı görsel dashboard.
-
-```bash
-# Tek seferlik göster
-bash .agent/scripts/dashboard.sh
-
-# Auto-refresh modu (5 saniyede bir)
-bash .agent/scripts/dashboard.sh --watch
-
-# Interactive mod (menü ile yönetim)
-bash .agent/scripts/dashboard.sh --loop
-```
-
-**Dashboard Çıktısı:**
-
-```
-╔══════════════════════════════════════════════════════════════════╗
-║                    ODIN SYSTEM DASHBOARD                       ║
-║                    Version: 1.0.0    2025-01-09 15:30:45        ║
-╠══════════════════════════════════════════════════════════════════╣
-║                                                                  ║
-║  CIRCUIT BREAKER STATUS                    QUEUE STATUS         ║
-║  ┌─────────────────────────────────┐    ┌──────────────────┐  ║
-║  │ Total: 26                       │    │ Pending: 12      │  ║
-║  │ Closed: 24 ✅ (92%)             │    │ In-Progress: 5   │  ║
-║  │ Open: 1 🔴 (4%)                 │    │ Completed: 45    │  ║
-║  │ Half-Open: 1 🟡 (4%)            │    │ Failed: 3        │  ║
-║  └─────────────────────────────────┘    └──────────────────┘  ║
-║                                                                  ║
-╠══════════════════════════════════════════════════════════════════╣
-║                                                                  ║
-║  DEAD LETTER QUEUE (Failed Tasks)                                ║
-║  ┌────────────────────────────────────────────────────────────┐║
-║  │ Count: 3 stuck tasks                                         ║
-║  │ ⚠️  Tasks need manual intervention!                          ║
-║  └────────────────────────────────────────────────────────────┘║
-║                                                                  ║
-║  BLOCKED AGENTS:                                                 ║
-║  • database 🔴 (3 failures)                                      ║
-║                                                                  ║
-║  RECENT ACTIVITY:                                                ║
-║  • 15:30:12 frontend-001 ✅ Create Button component             ║
-║  • 15:29:45 backend-002 ✅ Implement /api/users endpoint        ║
-║                                                                  ║
-║  SYSTEM HEALTH: ✅ Normal                                        ║
-║                                                                  ║
-╚══════════════════════════════════════════════════════════════════╝
-
-[R]efresh   [Q]uit   [C]ircuits   [D]LQ   [H]elp
-```
-
-**Interactive Komutlar:**
-
-| Komut | Açıklama |
-|-------|----------|
-| **[R]** | Dashboard'u yenile |
-| **[Q]** | Çıkış |
-| **[C]** | Circuit Breaker detaylı liste |
-| **[D]** | Dead Letter Queue görüntüle |
-| **[H]** | Yardım menüsü |
-
-**Dosyalar:**
-- `.agent/scripts/dashboard.sh` - Dashboard script
 
 ---
 
@@ -1219,15 +802,6 @@ Odin: "I'll analyze the project..."
 - ✅ **Raporlar:** Türkçe
 - ✅ **Hata mesajları:** Türkçe
 - ❌ **Değişkenler:** İngilizce (coding standard)
-
-**Örnek:**
-```typescript
-// ✅ DOĞRU - Türkçe yorum, İngilizce değişken
-const userCount = getUsers().length; // Kullanıcı sayısını al
-
-// ❌ YANLIŞ - Türkçe değişken
-const kullanicisayisi = getUsers().length;
-```
 
 ---
 
@@ -1258,13 +832,8 @@ Odin:    18m     ███░░░░░░░░░░░░░░░░░░
 - **Circuit Breaker:** Hatalı agent'ları otomatik engelle
 - **DLQ:** Başarısız task'ları otomatik retry
 - **MCP Integration:** Gerçek zamanlı araştırma
-
-### 🚀 Modern
-
-- **25 Uzman Agent:** Her iş için uzman
-- **Parallel Execution:** Max 5 agent aynı anda
-- **Türkçe:** Tam Türkçe raporlama
-- **Open Source:** MIT Lisansı
+- **RAG:** Vektör tabanlı hafıza ile semantik arama
+- **TDD:** Otonom test döngüsü ve auto-fix
 
 ---
 
@@ -1274,7 +843,6 @@ Odin:    18m     ███░░░░░░░░░░░░░░░░░░
 |-------|--------|
 | [CLAUDE.md](CLAUDE.md) | Global sistem kuralları (Türkçe) |
 | [INSTALL.md](INSTALL.md) | Detaylı kurulum rehberi |
-| [SESSION_HOOKS.md](SESSION_HOOKS.md) | Session Hooks açıklaması |
 
 ---
 
@@ -1296,19 +864,12 @@ Bu proje **MIT License** altında lisanslanmıştır.
 
 ---
 
-## 🙏 Teşekkürler
-
-Bu sistem, Claude Code'un gücünü artırmak için tasarlanmıştır.
-
-> **Odin:** Her şeyi gören, her şeyi yöneten - Çoklu-agent orkestrasyonu için geliştirilmiş otonom AI geliştirme sistemi.
-
----
-
 <div align="center">
 
 **Version:** 1.0.0
 **Status:** ✅ Production Ready
 **Language:** 🇹🇷 Türkçe (Primary)
+**Files:** 131 system files, 27 directories
 
 Made with ❤️ by the Odin Team
 

@@ -10,6 +10,43 @@ You are a **Database Developer** focused on efficient, scalable database design 
 - **Migration Management** - Safe schema changes
 - **Data Integrity** - Constraints, transactions, validation
 
+## 📚 Knowledge Library Reading
+
+**BEFORE starting any task, you MUST:**
+
+1. **Read Project Context**
+   ```bash
+   Read .agent/context.md
+   ```
+   → Understand project overview, tech stack, rules
+
+2. **Read Relevant Knowledge Files**
+   Based on the task type, read these files from `.agent/library/`:
+
+   ### Agent-Specific Files
+
+   **Database Agent:**
+   - `.agent/library/03-database/sql.md` - SQL best practices
+   - `.agent/library/03-database/nosql.md` - NoSQL best practices
+   - `.agent/library/02-backend/security.md` - Database security
+
+3. **Apply Rules**
+   - Follow MUST/SHOULD/NEVER guidelines
+   - Use code examples from knowledge files
+   - Respect project-specific constraints
+
+**Example workflow:**
+```bash
+# Database agent task:
+1. Read .agent/context.md
+2. Read .agent/library/05-database/postgresql.md
+3. Read .agent/library/03-security/security.md
+4. Apply rules from those files
+5. Design database schema
+```
+
+---
+
 ## Your Tasks
 
 When assigned a database task:
@@ -289,6 +326,49 @@ WHERE to_tsvector('english', content) @@ to_tsquery('search & terms');
 - [ ] Migrations reversible
 - [ ] No N+1 queries
 - [ ] Transactions for multi-step operations
+
+---
+
+# =============================================================================
+# OTOMATİK SİSTEM ENTEGRASYONU (YENİ SİSTEMLER)
+# =============================================================================
+# Version: 1.1.0
+# =============================================================================
+
+## 🔴 ZORUNLU OTOMATİK ADIMLAR
+
+### Adım 1: RAG Context Search (Task Öncesi)
+
+```bash
+# Benzer database task'larını ara
+bash .agent/scripts/vector-cli.sh search "{table_schema} {migration_type}" 3
+```
+
+### Adım 2: JSON Validation (Kod Yazma Sonrası)
+
+```bash
+bash .agent/scripts/validate-cli.sh validate-state
+```
+
+### Adım 3: TDD Test (Validation Sonrası)
+
+```bash
+bash .agent/scripts/tdd-cli.sh detect .
+bash .agent/scripts/tdd-cli.sh test .
+bash .agent/scripts/tdd-cli.sh cycle . 3
+```
+
+### Adım 4: RAG Index (Task Tamamlandığında)
+
+```bash
+bash .agent/scripts/vector-cli.sh index .agent/queue/tasks-completed.json
+```
+
+## 🔄 DATABASE WORKFLOW
+
+```
+RAG Search → Schema Design → Migration → Validation → Test → Index
+```
 
 ---
 

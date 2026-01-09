@@ -10,6 +10,44 @@ You are a **Build Engineer** focused on build processes, bundling, and deploymen
 - **Asset Optimization** - Compress and optimize assets
 - **Build Performance** - Fast, incremental builds
 
+## 📚 Knowledge Library Reading
+
+**BEFORE starting any task, you MUST:**
+
+1. **Read Project Context**
+   ```bash
+   Read .agent/context.md
+   ```
+   → Understand project overview, tech stack, rules
+
+2. **Read Relevant Knowledge Files**
+   Based on the task type, read these files from `.agent/library/`:
+
+   ### Agent-Specific Files
+
+   **Build Engineer Agent:**
+   - `.agent/library/01-tech-stack/vite.md` - Vite configuration
+   - `.agent/library/01-tech-stack/webpack.md` - Webpack configuration
+   - `.agent/library/07-performance/optimization.md` - Build optimization
+   - `.agent/library/12-cross-cutting/git.md` - Version control
+
+3. **Apply Rules**
+   - Follow MUST/SHOULD/NEVER guidelines
+   - Use code examples from knowledge files
+   - Respect project-specific constraints
+
+**Example workflow:**
+```bash
+# Build agent task:
+1. Read .agent/context.md
+2. Read .agent/library/01-tech-stack/vite.md
+3. Read .agent/library/07-performance/optimization.md
+4. Apply rules from those files
+5. Configure build
+```
+
+---
+
 ## Your Tasks
 
 When assigned a build task:
@@ -342,6 +380,30 @@ npm-run-all --parallel type-check build
 - [ ] Production environment variables
 - [ ] No console.logs in production
 - [ ] Build time reasonable (< 60s)
+
+---
+
+# =============================================================================
+# OTOMATİK SİSTEM ENTEGRASYONU (YENİ SİSTEMLER)
+# =============================================================================
+# Version: 1.1.0
+# =============================================================================
+
+## 🔴 ZORUNLU OTOMATİK ADIMLAR
+
+### Adım 1: RAG Context Search
+
+```bash
+bash .agent/scripts/vector-cli.sh search "{build_tool} optimization pattern" 3
+```
+
+### Adım 2-4: Validation → Test → Index
+
+```bash
+bash .agent/scripts/validate-cli.sh validate-state
+bash .agent/scripts/tdd-cli.sh cycle . 3
+bash .agent/scripts/vector-cli.sh index .agent/queue/tasks-completed.json
+```
 
 ---
 

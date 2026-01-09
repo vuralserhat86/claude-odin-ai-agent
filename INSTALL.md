@@ -1,79 +1,67 @@
-# 📥 Kurulum Rehberi
+# 📥 ODIN AI Agent System - Kurulum Rehberi
 
-**Odin** AI Development Agent sisteminin 3 farklı kurulum yöntemi.
-
----
-
-## 🚀 Yöntem 1: Proje İçi Manuel (En Basit - 30 Saniye)
-
-### Kimler İçin?
-- ✅ Tek bir proje için kullanacaklar
-- ✅ Git ile versiyon kontrolü isteyenler
-- ✅ Proje özel yapılandırma isteyenler
-
-### Adımlar
-
-```bash
-# 1. Repoyu kopyala
-git clone https://github.com/KULLANICI/autonomous-odin.git
-cd autonomous-odin
-
-# 2. Kullanmaya başla
-# Claude Code'u bu klasörde aç
-# Prompt ver:
-"Projeyi analiz et"
-```
-
-### Avantajlar
-- ✅ Proje ile birlikte Git'te takip edilir
-- ✅ Ek kurulum gerekmez
-- ✅ Proje özel düzenleme yapılabilir
-
-### Dezavantajlar
-- ❌ Her projeye kopyalamak gerekir
-- ❌ Otomatik yükleme yok
+**Version:** 1.0.0
+**Durum:** Production Ready
+**Platform:** Claude Code (Windows, macOS, Linux)
 
 ---
 
-## 🌐 Yöntem 2: Global Otomatik (Önerilen - 2 Dakika)
+## 🎯 Hızlı Kurulum (2 Dakika)
 
-### Kimler İçin?
-- ✅ Tüm projelerinde kullanmak isteyenler
-- ✅ Tek seferlik kurulum isteyenler
-- ✅ Otomatik yükleme isteyenler
+### 1. Özellikler
 
-### Adımlar
+| Özellik | Açıklama |
+|---------|----------|
+| **25 Specialized Agent** | Frontend, Backend, Database, Security, Testing... |
+| **Circuit Breaker** | Hatalı agent'ları otomatik engelle |
+| **Dead Letter Queue** | Başarısız task'ları yönet |
+| **MCP Tools** | GitHub + Web research entegrasyonu |
+| **Auto Analysis** | Simple vs Complex task ayrımı |
+| **Türkçe Raporlama** | Tam Türkçe konuşma ve kodlama |
 
-#### Adım 1: Repoyu İndir
+---
+
+## 🚀 Kurulum Yöntemleri
+
+### Yöntem 1: Global Otomatik (Önerilen)
+
+✅ **Avantajlar:** Tüm projelerde otomatik çalışır
+⏱️ **Süre:** 2 dakika
+
+#### Adım 1: Repoyu Klonla
 
 ```bash
-# Repoyu bir klasöre indir (örneğin: ~/Downloads)
-git clone https://github.com/KULLANICI/autonomous-odin.git
-cd autonomous-odin
+git clone https://github.com/KULLANICI/odin-ai-agent.git
+cd odin-ai-agent
 ```
 
 #### Adım 2: Global Klasöre Kopyala
 
+**Windows:**
 ```bash
-# .agent klasörünü global Claude Code klasörüne kopyala
-cp -r .agent ~/.claude/.agent
+# Agent sistemini kopyala
+xcopy /E /I .agent C:\Users\KULLANICI\.claude\.agent\
+xcopy /E /I .claude\skills C:\Users\KULLANICI\.claude\skills\
 
-# .claude/skills klasörünü global'e kopyala (ÖNEMLİ!)
+# CLAUDE.md'yi kopyala
+copy CLAUDE.md C:\Users\KULLANICI\.claude\CLAUDE.md
+```
+
+**macOS/Linux:**
+```bash
+# Agent sistemini kopyala
+cp -r .agent ~/.claude/.agent
 cp -r .claude/skills ~/.claude/skills
 
-# CLAUDE.md'yi global klasöre kopyala
+# CLAUDE.md'yi kopyala
 cp CLAUDE.md ~/.claude/CLAUDE.md
 ```
 
-#### Adım 3: Session Hooks Yapılandır (Otomatik Yükleme)
+#### Adım 3: Session Hooks Yapılandır
 
-```bash
-# settings.json oluştur/düzenle
-# Windows: %USERPROFILE%\.claude\settings.json
-# macOS/Linux: ~/.claude/settings.json
-```
+**Windows:** `%USERPROFILE%\.claude\settings.json`
+**macOS/Linux:** `~/.claude/settings.json`
 
-**settings.json içeriği:**
 ```json
 {
   "hooks": {
@@ -81,314 +69,243 @@ cp CLAUDE.md ~/.claude/CLAUDE.md
       {
         "type": "loadFile",
         "path": "~/.claude/CLAUDE.md"
+      },
+      {
+        "type": "command",
+        "command": "echo '🪦 Odin AI Agent System v1.0.0 Loaded'"
       }
     ]
   }
 }
 ```
 
-### Avantajlar
-- ✅ Tüm projelerde otomatik çalışır
-- ✅ Tek seferlik kurulum
-- ✅ Otomatik yükleme (Session Hooks)
+#### Adım 4: Test Et
 
-### Dezavantajlar
-- ❌ Git ile takip edilmez
-- ❌ Global yapılandırma
+Claude Code'u aç ve şu komutu ver:
+
+```
+Odin sistemini test et
+```
 
 ---
 
-## 🔄 Yöntem 3: Hibrit (En İyi - 3 Dakika)
+### Yöntem 2: Proje İçi Manuel
 
-### Kimler İçin?
-- ✅ Hem global hem proje içi kullanmak isteyenler
-- ✅ Esneklik isteyenler
-- ✅ En iyi iki dünya
+✅ **Avantajlar:** Proje ile birlikte Git'te takip edilir
+⏱️ **Süre:** 30 saniye
 
-### Adımlar
-
-#### Adım 1: Global Kurulum (Yöntem 2'deki gibi)
+#### Adım 1: Repoyu Klonla
 
 ```bash
-# Global klasöre kopyala
+git clone https://github.com/KULLANICI/odin-ai-agent.git
+cd odin-ai-agent
+```
+
+#### Adım 2: Kullanmaya Başla
+
+Claude Code'u bu klasörde aç ve prompt ver:
+
+```
+Projeyi analiz et
+```
+
+---
+
+### Yöntem 3: Hibrit (En İyi)
+
+✅ **Avantajlar:** Hem global hem proje içi
+⏱️ **Süre:** 3 dakika
+
+#### Adım 1: Global Kurulum (Yöntem 1)
+
+```bash
 cp -r .agent ~/.claude/.agent
 cp -r .claude/skills ~/.claude/skills
 cp CLAUDE.md ~/.claude/CLAUDE.md
-
-# Session hooks yapılandır
-# settings.json'e startup hook ekle
 ```
 
-#### Adım 2: Proje İçi Link Oluştur
+#### Adım 2: Her Proje İçin
 
 ```bash
-# Her projede:
 cd my-project
 
-# Global .agent'a symlink oluştur
+# Symlink oluştur (macOS/Linux)
 ln -s ~/.claude/.agent .agent
 
-# Veya kopyala:
-cp -r ~/.claude/.agent .
+# Veya kopyala (Windows)
+xcopy /E /I C:\Users\KULLANICI\.claude\.agent .agent
 ```
-
-### Avantajlar
-- ✅ Global otomatik yükleme
-- ✅ Proje içi Git takibi
-- ✅ Merkezi yönetim
-- ✅ Esneklik
-
-### Dezavantajlar
-- ❌ Biraz daha karmaşık
-- ❌ Daha fazla adım
 
 ---
 
 ## 🔍 Kurulum Doğrulama
 
-### Test Edin
+### Test Et
 
-```bash
-# 1. Claude Code'u aç
-# 2. Şu komutu ver:
-"Sistemi test et, bana durumu raporla"
+Claude Code'a şu prompt'u ver:
 
-# Beklenen çıktı:
-# "✅ Odin AI Development Agent sistemi aktif.
-#  25 agent hazır, Circuit Breaker çalışıyor, DLQ boş."
+```
+Odin sistem durumu nedir?
 ```
 
-### Komutları Test Edin
+**Beklenen Çıktı:**
+```
+🪦 Odin AI Agent System v1.0.0
 
-```bash
-# Circuit Breaker durumu
-bash ~/.claude/.agent/scripts/circuit.sh status
-
-# Queue durumu
-bash ~/.claude/.agent/scripts/queue.sh status
-
-# Veya proje içi kurulum yaptıysanız:
-bash .agent/scripts/circuit.sh status
-bash .agent/scripts/queue.sh status
+✅ Sistem Aktif
+   - 25 agent hazır
+   - Circuit breaker: 26/26 CLOSED
+   - Queue: 5 aktif
+   - Knowledge base: 51 dosya
 ```
 
 ---
 
-## 📂 Dosya Yapısı (Kurulum Sonrası)
-
-### Global Kurulum
+## 📁 Dosya Yapısı
 
 ```
-~/.claude/
-├── .agent/              (Sistem)
-│   ├── config/
-│   ├── prompts/
-│   ├── queue/
-│   ├── state/
-│   └── scripts/
-├── CLAUDE.md           (Global rules)
-└── settings.json       (Hooks)
-```
-
-### Proje İçi Kurulum
-
-```
-my-project/
-├── .agent/             (Sistem)
+odin-ai-agent/
+├── .agent/
+│   ├── config/           # Konfigürasyon (16 dosya)
+│   ├── library/          # Knowledge base (51 dosya)
+│   ├── prompts/          # Agent prompt'ları (26 dosya)
+│   ├── scripts/          # Bash + Python script'leri (23 dosya)
+│   ├── state/            # Runtime state (5 dosya)
+│   └── queue/            # Task queue'leri (5 dosya)
 ├── .claude/
-│   └── skills/
-└── CLAUDE.md           (Global rules)
+│   └── skills/           # autonomous-dev.mdc
+├── CLAUDE.md             # Global kurallar
+├── odin.py              # Ana CLI
+├── README.md             # Sistem dokümantasyonu
+└── INSTALL.md            # Bu dosya
 ```
 
 ---
 
-## 🧠 Vektör Hafıza Sistemi (RAG) Kurulumu
+## 🛠️ Kullanım
 
-**Opsiyonel ancak önerilen** - Proje büyüdükçe çok değerli.
-
-### Nedir?
-
-Vektör tabanlı hafıza sistemi, tamamlanan task'ları semantik olarak arar. Yeni bir task geldiğinde, daha önce yapılmış benzer task'ları bulur ve tutarlılık sağlar.
-
-### Kimler İçin?
-
-- ✅ Büyük projeler geliştirenler (100+ task)
-- ✅ Uzun süreli projeler (6+ ay)
-- ✅ Tutarlı kod üretimi isteyenler
-- ⚠️ Küçük projeler için gerekli değil
-
-### Dependency Kurulumu
+### CLI Komutları
 
 ```bash
-# sentence-transformers kurulumu
+# Yardım
+python odin.py --help
+
+# Görev ekle
+python odin.py add "User authentication system oluştur" --agent backend --priority high
+
+# Queue listele
+python odin.py list --status pending
+
+# Durum görüntüle
+python odin.py status
+
+# Sistem güncelle
+python odin.py update
+```
+
+### Script Komutları
+
+```bash
+# Circuit breaker durum
+bash .agent/scripts/circuit.sh status
+
+# Queue durum
+bash .agent/scripts/queue.sh status
+
+# Validation
+bash .agent/scripts/validate-cli.sh validate-state
+
+# Dashboard
+bash .agent/scripts/dashboard.sh --watch
+```
+
+---
+
+## 🔧 Bağımlılıklar
+
+### Gerekli Paketler
+
+```bash
+# Python 3.8+ gerekli
+python --version
+
+# İsteğe bağlı (RAG için)
 pip install sentence-transformers
 
-# Veya daha hafif versiyon (ONNX runtime)
-pip install sentence-transformers[onnx]
+# İsteğe bağlı (CLI renkli çıktı için)
+pip install rich typer
 ```
-
-**Not:** İlk kurulum ~200MB disk alanı kullanır.
-
-### İlk Kurulum
-
-```bash
-# 1. İlk indeksleme (tamamlanmış task'lar)
-bash .agent/scripts/vector-cli.sh index
-
-# 2. Veya tüm queue'ları indeksle
-bash .agent/scripts/vector-cli.sh index-all
-
-# 3. Test et
-bash .agent/scripts/vector-cli.sh search "authentication"
-```
-
-### Otomatik İndeksleme
-
-```bash
-# Git hook kur (her commit'te indeksler)
-bash .agent/scripts/vector-auto-index.sh install hook
-
-# Veya cron job kur (her 5 dakikada)
-bash .agent/scripts/vector-auto-index.sh install cron
-```
-
-### Kullanım
-
-```bash
-# Semantik arama
-bash .agent/scripts/vector-cli.sh search "React form" 5
-
-# İstatistikler
-bash .agent/scripts/vector-cli.sh stats
-
-# Yardım
-bash .agent/scripts/vector-cli.sh help
-```
-
-### Avantajlar
-
-- ✅ Proje büyüse bile hız sabit kalır
-- ✅ Token kullanımı %90 azalır
-- ✅ Eski decision'lar unutulmaz
-- ✅ Tutarlı kod üretimi
-
-### Dezavantajlar
-
-- ❌ 200MB disk alanı
-- ❌ İlk kurulum zamanı
 
 ---
 
-## 🛠️ Sorun Giderme
+## 🐛 Sorun Giderme
 
-### Sorun: "command not found: jq"
-
-**Çözüm:** jq yükle
+### Sorun: "Python bulunamadı"
 
 ```bash
-# macOS
-brew install jq
-
-# Ubuntu/Debian
-sudo apt-get install jq
-
-# Windows (Chocolatey)
-choco install jq
-```
-
-### Sorun: "CLAUDE.md yüklenmiyor"
-
-**Çözüm:** Session hooks kontrol et
-
-```bash
-# settings.json'i kontrol et
-cat ~/.claude/settings.json
-
-# "hooks" ve "startup" bölümü olmalı
+# Python 3.8+ kur
+# Windows: python.org
+# macOS: brew install python3
+# Linux: sudo apt install python3
 ```
 
 ### Sorun: "Agent çalışmıyor"
 
-**Çözüm:** Circuit Breaker durumunu kontrol et
-
 ```bash
-bash .agent/scripts/circuit.sh list
+# Circuit durumunu kontrol et
+bash .agent/scripts/circuit.sh status
 
-# OPEN circuit varsa reset et:
+# Circuit'i sıfırla
 bash .agent/scripts/circuit.sh reset <agent-type>
 ```
 
----
-
-## 🔄 Güncelleme
-
-### Repo'yu Güncelle
+### Sorun: "Queue boş kalıyor"
 
 ```bash
-cd ~/autonomous-odin  # veya klonladığınız yer
-git pull origin main
+# Queue'yu sıfırla
+bash .agent/scripts/queue.sh clear
 
-# Global kurulum yaptıysanız:
-cp -r .agent/* ~/.claude/.agent/
-cp CLAUDE.md ~/.claude/CLAUDE.md
-```
-
-### Versiyon Kontrolü
-
-```bash
-# Versiyon bilgisi README.md'de veya CLAUDE.md'de
-head -5 README.md
-```
-
----
-
-## 🗑️ Kaldırma
-
-### Global Kaldırma
-
-```bash
-# Global klasörleri sil
-rm -rf ~/.claude/.agent
-rm ~/.claude/CLAUDE.md
-
-# Session hooks'u kaldır
-# settings.json'den "hooks" bölümünü sil
-```
-
-### Proje İçi Kaldırma
-
-```bash
-# Proje klasöründen sil
-rm -rf .agent
-rm .claude/skills/autonomous-dev.mdc
-rm CLAUDE.md
+# Yeniden başlat
+python odin.py update
 ```
 
 ---
 
 ## 📞 Destek
 
-Sorun yaşarsanız:
-1. [README.md](README.md) dosyasını okuyun
-2. [SESSION_HOOKS.md](SESSION_HOOKS.md) dosyasına bakın
-3. GitHub Issues'a sorunuzu gönderin
+**Sorun mu buldun?**
+
+1. `.agent/state/` dosyalarını kontrol et
+2. Circuit breaker durumunu kontrol et
+3. GitHub issue aç
 
 ---
 
-## ✅ Kurulum Kontrol Listesi
+## ✅ Kurulum Tamamlandı
 
-- [ ] Repo klonlandı
-- [ ] Kurulum yöntemi seçildi (Manuel / Global / Hibrit)
-- [ ] Dosyalar kopyalandı
-- [ ] (Opsiyonel) Session hooks yapılandırıldı
-- [ ] (Opsiyonel) settings.json düzenlendi
-- [ ] Kurulum test edildi
-- [ ] Komutlar çalışıyor (circuit.sh, queue.sh)
-- [ ] İlk prompt denendi
+Sistem kullanıma hazır! İlk prompt'unu vererek başlayabilirsin:
 
-**Tüm işaretler varsa ✅ kurulum tamamlanmıştır!**
+```
+Merhaba Odin! Beni tanı
+```
+
+**Beklenen Yanıt:**
+```
+🪦 Odin AI Agent System v1.0.0
+
+Merhaba! Ben Odin, 25 specialized agent ile otonom geliştirme sistemi.
+
+Size nasıl yardımcı olabilirim?
+- 🏗️ Proje geliştirme
+- 🔍 Kod analizi
+- 🐛 Bug fixing
+- 📝 Dokümantasyon
+- 🧪 Test yazma
+...
+```
 
 ---
 
 **Versiyon:** 1.0.0
-**Son Güncelleme:** 2025-01-08
+**Son Güncelleme:** 2026-01-09
+**Durum:** ✅ Production Ready

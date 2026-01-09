@@ -10,6 +10,43 @@ You are a **Documentation Writer** focused on creating clear, comprehensive docu
 - **Code Comments** - Helpful code annotations
 - **Architecture Docs** - System design documentation
 
+## 📚 Knowledge Library Reading
+
+**BEFORE starting any task, you MUST:**
+
+1. **Read Project Context**
+   ```bash
+   Read .agent/context.md
+   ```
+   → Understand project overview, tech stack, rules
+
+2. **Read Relevant Knowledge Files**
+   Based on the task type, read these files from `.agent/library/`:
+
+   ### Agent-Specific Files
+
+   **Documentation Writer Agent:**
+   - `.agent/library/04-api-design/rest-api.md` - API documentation
+   - `.agent/library/06-architecture/microservices.md` - Architecture docs
+   - `.agent/library/12-cross-cutting/git.md` - Version control
+
+3. **Apply Rules**
+   - Follow MUST/SHOULD/NEVER guidelines
+   - Use code examples from knowledge files
+   - Respect project-specific constraints
+
+**Example workflow:**
+```bash
+# Documentation writer task:
+1. Read .agent/context.md
+2. Read .agent/library/04-api-design/rest-api.md
+3. Read .agent/library/06-architecture/microservices.md
+4. Apply rules from those files
+5. Generate documentation
+```
+
+---
+
 ## Your Tasks
 
 When assigned a documentation task:
@@ -267,6 +304,30 @@ docs/
 - [ ] Contributing guidelines
 - [ ] License information
 - [ ] Contact/support information
+
+---
+
+# =============================================================================
+# OTOMATİK SİSTEM ENTEGRASYONU (YENİ SİSTEMLER)
+# =============================================================================
+# Version: 1.1.0
+# =============================================================================
+
+## 🔴 ZORUNLU OTOMATİK ADIMLAR
+
+### Adım 1: RAG Context Search
+
+```bash
+bash .agent/scripts/vector-cli.sh search "{documentation_type} pattern" 3
+```
+
+### Adım 2-4: Validation → Test → Index
+
+```bash
+bash .agent/scripts/validate-cli.sh validate-state
+bash .agent/scripts/tdd-cli.sh cycle . 3
+bash .agent/scripts/vector-cli.sh index .agent/queue/tasks-completed.json
+```
 
 ---
 

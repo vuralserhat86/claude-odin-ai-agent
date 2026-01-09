@@ -30,6 +30,29 @@ readonly NC='\033[0m' # No Color
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TDD_PY="${SCRIPT_DIR}/autonomous_tdd.py"
 
+# Python komutu bul (cross-platform)
+PYTHON_CMD=""
+
+# Önce PYTHON ortalık değişkenini kontrol et
+if [[ -n "$PYTHON" ]]; then
+    PYTHON_CMD="$PYTHON"
+# Diğer yaygın yolları dene
+elif [[ -f "/c/Users/mSv/AppData/Local/Programs/Python/Python313/python.exe" ]]; then
+    PYTHON_CMD="/c/Users/mSv/AppData/Local/Programs/Python/Python313/python.exe"
+elif [[ -f "/c/Python313/python.exe" ]]; then
+    PYTHON_CMD="/c/Python313/python.exe"
+elif [[ -f "/c/Python/python.exe" ]]; then
+    PYTHON_CMD="/c/Python/python.exe"
+elif [[ -f "/usr/bin/python3" ]]; then
+    PYTHON_CMD="/usr/bin/python3"
+elif [[ -f "/usr/local/bin/python3" ]]; then
+    PYTHON_CMD="/usr/local/bin/python3"
+elif command -v python3 &> /dev/null; then
+    PYTHON_CMD="python3"
+elif command -v python &> /dev/null; then
+    PYTHON_CMD="python"
+fi
+
 # =============================================================================
 # YARDIMCI FONKSİYONLAR
 # =============================================================================
@@ -51,16 +74,10 @@ print_info() {
 }
 
 check_python() {
-    if ! command -v python &> /dev/null && ! command -v python3 &> /dev/null; then
+    # PYTHON_CMD zaten global olarak ayarlandı
+    if [[ -z "$PYTHON_CMD" ]]; then
         print_error "Python bulunamadı. Lütfen Python 3.8+ yükleyin."
         exit 1
-    fi
-
-    # Python 3 veya python3 kullan
-    if command -v python3 &> /dev/null; then
-        PYTHON_CMD="python3"
-    else
-        PYTHON_CMD="python"
     fi
 }
 
