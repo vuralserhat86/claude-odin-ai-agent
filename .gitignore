@@ -45,6 +45,9 @@ SYSTEM_IMPROVEMENT_LOG.md
 .claude/settings.local.json
 .claude/settings.local.*
 
+# Claude Code Hooks (Kullanıcıya özel session dosyaları)
+.claude/hooks/
+
 # ============================================
 # IDE VE EDITÖR DOSYALARI
 # ============================================
