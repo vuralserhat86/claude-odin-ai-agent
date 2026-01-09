@@ -202,6 +202,83 @@ my-project/
 
 ---
 
+## 🧠 Vektör Hafıza Sistemi (RAG) Kurulumu
+
+**Opsiyonel ancak önerilen** - Proje büyüdükçe çok değerli.
+
+### Nedir?
+
+Vektör tabanlı hafıza sistemi, tamamlanan task'ları semantik olarak arar. Yeni bir task geldiğinde, daha önce yapılmış benzer task'ları bulur ve tutarlılık sağlar.
+
+### Kimler İçin?
+
+- ✅ Büyük projeler geliştirenler (100+ task)
+- ✅ Uzun süreli projeler (6+ ay)
+- ✅ Tutarlı kod üretimi isteyenler
+- ⚠️ Küçük projeler için gerekli değil
+
+### Dependency Kurulumu
+
+```bash
+# sentence-transformers kurulumu
+pip install sentence-transformers
+
+# Veya daha hafif versiyon (ONNX runtime)
+pip install sentence-transformers[onnx]
+```
+
+**Not:** İlk kurulum ~200MB disk alanı kullanır.
+
+### İlk Kurulum
+
+```bash
+# 1. İlk indeksleme (tamamlanmış task'lar)
+bash .agent/scripts/vector-cli.sh index
+
+# 2. Veya tüm queue'ları indeksle
+bash .agent/scripts/vector-cli.sh index-all
+
+# 3. Test et
+bash .agent/scripts/vector-cli.sh search "authentication"
+```
+
+### Otomatik İndeksleme
+
+```bash
+# Git hook kur (her commit'te indeksler)
+bash .agent/scripts/vector-auto-index.sh install hook
+
+# Veya cron job kur (her 5 dakikada)
+bash .agent/scripts/vector-auto-index.sh install cron
+```
+
+### Kullanım
+
+```bash
+# Semantik arama
+bash .agent/scripts/vector-cli.sh search "React form" 5
+
+# İstatistikler
+bash .agent/scripts/vector-cli.sh stats
+
+# Yardım
+bash .agent/scripts/vector-cli.sh help
+```
+
+### Avantajlar
+
+- ✅ Proje büyüse bile hız sabit kalır
+- ✅ Token kullanımı %90 azalır
+- ✅ Eski decision'lar unutulmaz
+- ✅ Tutarlı kod üretimi
+
+### Dezavantajlar
+
+- ❌ 200MB disk alanı
+- ❌ İlk kurulum zamanı
+
+---
+
 ## 🛠️ Sorun Giderme
 
 ### Sorun: "command not found: jq"
