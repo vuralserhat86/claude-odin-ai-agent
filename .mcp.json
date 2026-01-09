@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": ""
+      }
+    },
+    "duckduckgo": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-duckduckgo"]
+    },
+    "web-reader": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-web-reader"]
+    }
+  }
+}
