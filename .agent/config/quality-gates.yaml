@@ -1,0 +1,302 @@
+# =============================================================================
+# Odin AI Agent System - Quality Gates Configuration
+# =============================================================================
+# TDD (Test-Driven Development) kalite kapıları yapılandırması
+#
+# Her bir "gate" test sonuçlarını değerlendirir ve geçti/kaldı kararını verir.
+# Eğer bir gate başarısız olursa, TDD döngüsü kodu düzeltmeye çalışır.
+#
+# Version: 1.0.0
+# =============================================================================
+
+# =============================================================================
+# TEST KAPILARI (Test Gates)
+# =============================================================================
+# Her bir gate'in kriterlerini tanımlar
+test_gates:
+
+  # Kod kapsama oranı (Code Coverage)
+  coverage:
+    enabled: true
+    minimum_percent: 80      # Minimum %80 kapsama oranı
+    enforce: true            # Zorunlu mu?
+
+    # Dosya/proje bazlı istisnalar
+    exceptions:
+      # Bu dosyalar/klasörler coverage'den muaf
+      - "test/**"
+      - "tests/**"
+      - "**/*.test.js"
+      - "**/*.test.ts"
+      - "**/*.spec.js"
+      - "**/*.spec.ts"
+      - "**/node_modules/**"
+      - "**/dist/**"
+      - "**/build/**"
+
+  # Test başarısı (Test Pass Rate)
+  pass_rate:
+    enabled: true
+    minimum_percent: 100     # %100 test geçmeli (0 hata)
+    allow_skipped: false     # Skip edilen testlere izin ver
+
+  # Test performansı (Test Execution Time)
+  performance:
+    enabled: true
+    max_duration_seconds: 60 # Testler 60 saniyeden fazla sürmemeli
+    warn_threshold: 30       # 30 saniye uyarı ver
+
+# =============================================================================
+SEVERITY_THRESHOLD
+# Hata sayısı kriterleri
+# =============================================================================
+severity:
+
+  # Kritik hatalar (Critical)
+  # - Test crashes, timeout errors, environment failures
+  critical:
+    max_count: 0             # Sıfır kritik hata
+    auto_fix: true           # Otomatik düzeltmeyi dene
+
+  # Yüksek öncelik (High)
+  # - Assertion failures, logic errors
+  high:
+    max_count: 0             # Sıfır yüksek öncelikli hata
+    auto_fix: true
+
+  # Orta öncelik (Medium)
+  # - Minor logic issues, edge cases
+  medium:
+    max_count: 3             # Maksimum 3 orta öncelikli hata
+    auto_fix: true
+
+  # Düşük öncelik (Low)
+  # - Warnings, style issues
+  low:
+    max_count: 10            # Maksimum 10 düşük öncelikli hata
+    auto_fix: false          # Otomatik düzeltme yapma
+
+# =============================================================================
+# OTOMATİK DÜZELTME (Auto-Fix)
+# =============================================================================
+# TDD döngüsü başarısız olursa ne yapmalı?
+auto_fix:
+
+  # Genel ayarlar
+  enabled: true
+  max_attempts: 3           # Maksimum 3 deneme
+  cooldown_seconds: 5       # Denemeler arası bekleme süresi
+
+  # Düzeltme stratejileri
+  strategies:
+    # 1. LLM-based code correction
+    llm_fix:
+      enabled: true
+      max_retries: 2        # LLM düzeltme için max deneme
+
+    # 2. Rollback to last working state
+    rollback:
+      enabled: false         # Git rollback'i kullan (opsiyonel)
+
+    # 3. Skip test and mark for manual review
+    skip:
+      enabled: true          # Tüm denemeler başarısız olursa testi atla
+      target: "dlq"          # Dead Letter Queue'ya gönder
+
+# =============================================================================
+# TIMEOUT AYARLARI (Timeouts)
+# =============================================================================
+timeout:
+
+  # Test timeout'ları
+  test:
+    default: 60              # Varsayılan test timeout (saniye)
+    unit: 30                 # Unit test timeout
+    integration: 120         # Integration test timeout
+    e2e: 300                 # E2E test timeout (5 dakika)
+
+  # Framework-specific timeout'lar
+  framework:
+    jest: 60
+    pytest: 120
+    go_test: 90
+    cargo_test: 180
+
+# =============================================================================
+# FRAMEWORK-SPECIFIC AYARLAR
+# =============================================================================
+# Her test framework'ü için özel ayarlar
+frameworks:
+
+  # JavaScript/TypeScript - Jest
+  jest:
+    enabled: true
+    command: "npm test -- --coverage --verbose"
+    coverage_format: "lcov"
+    coverage_threshold: 80
+    reporters:
+      - "default"
+      - "jest-junit"
+
+  # Python - Pytest
+  pytest:
+    enabled: true
+    command: "pytest --cov=. --cov-report=term-missing --cov-report=html -v"
+    coverage_format: "pytest-cov"
+    coverage_threshold: 80
+    plugins:
+      - "pytest-cov"
+      - "pytest-timeout"
+
+  # Go - go test
+  go_test:
+    enabled: true
+    command: "go test -v -cover -coverprofile=coverage.out"
+    coverage_format: "go-cover"
+    coverage_threshold: 80
+    race_detection: true    # -race flag
+
+  # Rust - cargo test
+  cargo_test:
+    enabled: true
+    command: "cargo test --no-fail-fast"
+    coverage_format: "cargo-tarpaulin"
+    coverage_threshold: 80
+
+# =============================================================================
+# PROJE BAZLI AYARLAR (Project-Specific Overrides)
+# =============================================================================
+# Proje tipine göre özel ayarlar
+project_profiles:
+
+  # Frontend proje (React, Vue, etc.)
+  frontend:
+    frameworks: ["jest", "vitest"]
+    coverage_threshold: 75   # Frontend'de biraz daha düşük
+    timeout: 60
+    severity:
+      critical: { max_count: 0 }
+      high: { max_count: 0 }
+      medium: { max_count: 5 }
+      low: { max_count: 15 }
+
+  # Backend proje (Node.js, Python, Go)
+  backend:
+    frameworks: ["jest", "pytest", "go_test"]
+    coverage_threshold: 85   # Backend'de daha yüksek
+    timeout: 120
+    severity:
+      critical: { max_count: 0 }
+      high: { max_count: 0 }
+      medium: { max_count: 2 }
+      low: { max_count: 10 }
+
+  # Full-stack proje
+  fullstack:
+    frameworks: ["jest", "pytest", "go_test"]
+    coverage_threshold: 80
+    timeout: 180
+    severity:
+      critical: { max_count: 0 }
+      high: { max_count: 0 }
+      medium: { max_count: 3 }
+      low: { max_count: 12 }
+
+# =============================================================================
+# RAPORLAMA (Reporting)
+# =============================================================================
+reporting:
+
+  # Çıktı formatları
+  formats:
+    - "console"              # Konsol çıktısı (renkli)
+    - "json"                 # JSON formatında
+    - "junit"                # JUnit XML formatı
+
+  # Rapor kaydı
+  save_reports: true
+  report_dir: ".agent/reports/tdd"
+
+  # Başarısız test detay seviyesi
+  failure_detail: "verbose"  # [minimal, normal, verbose]
+
+# =============================================================================
+# GELİŞMİŞ AYARLAR (Advanced)
+# =============================================================================
+advanced:
+
+  # Paralel test çalıştırma
+  parallel:
+    enabled: false           # Claude Code'da paralel çalıştırma yok
+    max_workers: 4           # Maksimum worker sayısı
+
+  # Test izolasyonu (Test Isolation)
+  isolation:
+    enabled: true            # Her testi izole et
+    sandbox: true            # Sandbox içinde çalıştır
+    cleanup: true            # Test sonrası cleanup
+
+  # Cache yönetimi
+  cache:
+    enabled: true            # Test sonuçlarını cache'le
+    ttl_seconds: 300         # Cache TTL (5 dakika)
+
+  # Rate limiting
+  rate_limit:
+    max_tests_per_hour: 100  # Saatte maksimum test sayısı
+    cooldown_seconds: 10     # Testler arası min bekleme
+
+# =============================================================================
+# GELİŞTİRME AYARLARI (Development Mode)
+# =============================================================================
+development:
+
+  # Development modu aktif mi?
+  enabled: false
+
+  # Development modunda daha esnek kurallar
+  relaxed_rules:
+    coverage_threshold: 60   # %60 yeterli
+    max_medium: 5            # 5 orta hata
+    max_low: 20              # 20 düşük hata
+
+  # Fast feedback (hızlı geri bildirim)
+  fast_feedback: true
+  early_exit: true           # İlk hatada dur
+
+# =============================================================================
+# MONITORING ve ALERTING
+# =============================================================================
+monitoring:
+
+  # Metrikleri topla
+  collect_metrics: true
+
+  # Alert'ler
+  alerts:
+    # Coverage düşerse uyarı
+    coverage_drop:
+      enabled: true
+      threshold: 5           # %5 düşüşte uyarı
+
+    # Test sayısı artışı uyarısı
+    test_count_spike:
+      enabled: true
+      threshold: 50          # 50+ yeni test uyarısı
+
+    # Flaky test tespiti
+    flaky_test_detection:
+      enabled: true
+      threshold: 3           # 3 kez başarısız olan test flaky
+
+# =============================================================================
+# VARSAYILAN PROFİL (Default Profile)
+# =============================================================================
+# Eğer hiçbir profil uymazsa bunu kullan
+default_profile: "fullstack"
+
+# =============================================================================
+# VERSİYON BİLGİSİ
+# =============================================================================
+version: "1.0.0"
+last_updated: "2025-01-09"

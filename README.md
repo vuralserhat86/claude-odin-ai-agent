@@ -243,6 +243,81 @@ Manual Development          Agent-Driven Development
 
 ---
 
+## 📦 Gereksinimler
+
+Odin AI Agent System'i çalıştırmak için aşağıdaki araçlar gereklidir:
+
+### Zorunlu Gereksinimler
+
+| Araç | Versiyon | Açıklama |
+|------|----------|----------|
+| **Claude Code** | Latest | Anthropic'in AI kod editörü |
+| **Git** | 2.0+ | Versiyon kontrol sistemi |
+| **Bash** | 4.0+ | Shell script'leri için |
+| **jq** | 1.6+ | JSON işleme aracı |
+
+### Opsiyonel Gereksinimler
+
+Bu araçlar opsiyonel özellikler için gereklidir:
+
+| Araç | Versiyon | Özellik | Zorunluluk |
+|------|----------|---------|------------|
+| **Python** | 3.8+ | JSON Validasyon, RAG sistemi | Tavsiye edilir |
+| **pip** | Latest | Python paket yöneticisi | Python ile birlikte |
+
+### Python Paketleri (Opsiyonel)
+
+```
+# JSON Validasyon Sistemi için
+pip install pydantic
+
+# Vektör Hafıza Sistemi (RAG) için
+pip install sentence-transformers
+```
+
+### jq Kurulumu
+
+**jq** JSON işleme aracıdır ve zorunludur:
+
+```bash
+# macOS
+brew install jq
+
+# Ubuntu/Debian
+sudo apt-get install jq
+
+# Windows (Chocolatey)
+choco install jq
+
+# Windows (Scoop)
+scoop install jq
+```
+
+### Platform Desteği
+
+| Platform | Durum | Notlar |
+|----------|-------|-------|
+| **Linux** | ✅ Tam Destek | Tüm özellikler çalışır |
+| **macOS** | ✅ Tam Destek | Tüm özellikler çalışır |
+| **Windows (Git Bash)** | ✅ Tam Destek | Git Bash ortamı gerekli |
+| **Windows (PowerShell)** | ⚠️ Sınırlı | Bazı script'ler çalışmayabilir |
+
+### Özellik vs Gereksinim Matrisi
+
+| Özellik | Claude Code | Bash | jq | Python | sentence-transformers |
+|---------|-------------|------|-----|--------|----------------------|
+| **Multi-Agent System** | ✅ | ✅ | ✅ | - | - |
+| **Circuit Breaker** | ✅ | ✅ | ✅ | - | - |
+| **Queue System** | ✅ | ✅ | ✅ | - | - |
+| **Dashboard** | ✅ | ✅ | ✅ | - | - |
+| **TDD System** | ✅ | ✅ | ✅ | - | - |
+| **JSON Validation** | ✅ | ✅ | ✅ | ✅ | - |
+| **Vector Memory (RAG)** | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+> 💡 **İpucu:** Minimum özellikler için sadece **Claude Code + Bash + jq** yeterlidir. Gelişmiş özellikler için Python ekleyin.
+
+---
+
 ## 🚀 Kurulum
 
 ### 🔥 Minimum Kurulum (30 Saniye)
@@ -789,6 +864,256 @@ bash .agent/scripts/queue.sh dlq-delete <task-id>
 
 ---
 
+#### JSON Validasyon Sistemi
+
+**Yeni özellik:** Deterministik veri bütünlüğü için JSON schema validasyonu.
+
+```bash
+# Tüm state dosyalarını validate et
+bash .agent/scripts/validate-cli.sh validate-state
+
+# Tek bir dosya validate et
+bash .agent/scripts/validate-cli.sh validate .agent/state/circuits.json
+
+# Tüm kritik dosyaları validate et
+bash .agent/scripts/validate-cli.sh validate-all
+
+# Retry durumlarını gör
+bash .agent/scripts/validate-cli.sh retry-status
+
+# Retry sayacını sıfırla
+bash .agent/scripts/validate-cli.sh retry-reset .agent/queue/tasks-pending.json
+
+# JSON Schema export
+bash .agent/scripts/validate-cli.sh export-schemas
+
+# Validasyon testleri
+bash .agent/scripts/validate-cli.sh test
+```
+
+**Validasyon Katmanı:**
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    JSON VALIDATION LAYER                        │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  LLM Output → Pydantic Validation → State Files                  │
+│                  │                                              │
+│                  ├─ Circuit State Schema                        │
+│                  ├─ Task Queue Schema                           │
+│                  ├─ DLQ Schema                                  │
+│                  └─ Orchestrator State Schema                   │
+│                                                                  │
+│  Recovery Strategy:                                             │
+│  • Retry 0-1:   Otomatik retry (LLM'a hata gösterilir)           │
+│  • Retry 2-4:   DLQ'ya al (manuel müdahale gerekli)              │
+│  • Retry 5+:    Kullanıcı müdahalesi zorunlu                     │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Korunan Dosyalar:**
+- `.agent/state/circuits.json` - Circuit Breaker state
+- `.agent/queue/tasks-pending.json` - Pending task queue
+- `.agent/queue/tasks-in-progress.json` - In-progress task queue
+- `.agent/queue/tasks-completed.json` - Completed task history
+- `.agent/queue/tasks-failed.json` - Failed task queue
+- `.agent/queue/tasks-dead-letter.json` - DLQ
+
+**Komutlar:**
+
+```bash
+# Python ile direkt kullanım
+python .agent/scripts/validate.py validate-state
+python .agent/scripts/validate.py validate .agent/state/circuits.json
+
+# Bash wrapper ile kullanım
+bash .agent/scripts/validate-cli.sh validate-state
+bash .agent/scripts/validate-cli.sh retry-status
+```
+
+---
+
+#### Vektör Hafıza Sistemi (RAG)
+
+**Yeni özellik:** Vektör tabanlı hafıza ile semantik arama.
+
+```bash
+# İlk indeksleme (tamamlanmış task'lar)
+bash .agent/scripts/vector-cli.sh index
+
+# Tüm queue'ları indeksle
+bash .agent/scripts/vector-cli.sh index-all
+
+# Semantik arama
+bash .agent/scripts/vector-cli.sh search "authentication system"
+bash .agent/scripts/vector-cli.sh search "React form" 3
+
+# İstatistikler
+bash .agent/scripts/vector-cli.sh stats
+
+# Otomatik indeksleme (Git hook)
+bash .agent/scripts/vector-auto-index.sh install hook
+
+# Yardım
+bash .agent/scripts/vector-cli.sh help
+```
+
+**RAG Sistemi:**
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    VECTOR MEMORY (RAG)                          │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  1. INDEXING (Bir kere yapılır)                                 │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │  Task: "JWT authentication implementation"               │   │
+│  │       ↓                                                  │   │
+│  │  Embedding Model: [0.23, -0.45, 0.67, ...]  (384 boyut) │   │
+│  │       ↓                                                  │   │
+│  │  Vektör DB'ye kaydet                                    │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                  │
+│  2. RETRIEVAL (Yeni task'te)                                   │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │  Yeni Task: "OAuth2 login system"                       │   │
+│  │       ↓                                                  │   │
+│  │  Vektör Arama: "En benzer 5 task"                       │   │
+│  │       ↓                                                  │   │
+│  │  Sonuç:                                                 │   │
+│  │    1. JWT auth (0.92 benzerlik)                         │   │
+│  │    2. Session management (0.85 benzerlik)              │   │
+│  │    3. Password hashing (0.78 benzerlik)                │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                  │
+│  Faydalar:                                                      │
+│  • Proje büyüse bile hız sabit kalır                           │
+│  • Token kullanımı %90 azalır                                 │
+│  • Eski decision'lar unutulmaz                                │
+│  • Tutarlı kod üretimi                                        │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Dependency:**
+
+```bash
+pip install sentence-transformers
+```
+
+**Dosyalar:**
+- `.agent/state/vector-memory.db` - Vektör veritabanı
+- `.agent/scripts/vector_memory.py` - Core modül
+- `.agent/scripts/vector-cli.sh` - CLI wrapper
+- `.agent/scripts/vector-auto-index.sh` - Otomatik indeksleme
+
+---
+
+#### Otonom TDD Sistemi (Test-Driven Development)
+
+**Yeni özellik:** TDD metodolojisi ile otonom test döngüsü.
+
+```bash
+# Framework tespiti
+bash .agent/scripts/tdd-cli.sh detect <project_path>
+
+# Testleri çalıştır
+bash .agent/scripts/tdd-cli.sh test <project_path>
+
+# TDD döngüsü (max 3 deneme + auto-fix)
+bash .agent/scripts/tdd-cli.sh cycle <project_path>
+
+# Detaylı test raporu
+bash .agent/scripts/tdd-cli.sh report <project_path>
+
+# Sürekli izleme (watch mode)
+bash .agent/scripts/tdd-cli.sh watch <project_path>
+
+# Yardım
+bash .agent/scripts/tdd-cli.sh help
+```
+
+**TDD Sistemi:**
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    AUTONOMOUS TDD SYSTEM                        │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  1. FRAMEWORK TESPİTİ                                           │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │  Proje tarama → Framework tespit                        │   │
+│  │  • package.json → Jest/Vitest/Mocha                     │   │
+│  │  • pytest.ini → Pytest                                 │   │
+│  │  • go.mod → go test                                    │   │
+│  │  • Cargo.toml → cargo test                             │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                  │
+│  2. TEST ÇALIŞTIRMA                                             │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │  Framework'a uygun komut → Test çalıştır               │   │
+│  │  • Jest: npm test -- --coverage                        │   │
+│  │  • Pytest: pytest --cov=. -v                           │   │
+│  │  • Go: go test -v -cover                               │   │
+│  │  • Rust: cargo test                                    │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                  │
+│  3. QUALITY GATES                                               │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │  Sonuçları değerlendir:                                 │   │
+│  │  ✓ Coverage ≥ 80%                                      │   │
+│  │  ✓ Critical = 0                                        │   │
+│  │  ✓ High = 0                                            │   │
+│  │  ✓ Medium ≤ 3                                          │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                  │
+│  4. AUTO-FIX DÖNGÜSÜ                                            │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │  Test başarısız → Kodu analiz et → Düzelt → Retry      │   │
+│  │  Deneme 1 (60s) → Deneme 2 (120s) → Deneme 3 (240s)    │   │
+│  │  Tüm denemeler başarısız → DLQ'ya gönder               │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                  │
+│  Faydalar:                                                      │
+│  • Test-First Development (TDD) prensibi                         │
+│  • Otomatik test framework tespiti                               │
+│  • Quality gates ile kalite kontrolü                            │
+│  • Auto-fix ile kendi kendini düzelten kod                      │
+│  • Coverage takibi                                              │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Quality Gates (.agent/config/quality-gates.yaml):**
+
+| Kriter | Değer | Açıklama |
+|--------|-------|----------|
+| **Coverage** | ≥80% | Kod kapsama oranı |
+| **Critical Hata** | 0 | Sıfır kritik hata |
+| **High Hata** | 0 | Sıfır yüksek öncelikli hata |
+| **Medium Hata** | ≤3 | Maksimum 3 orta hata |
+| **Low Hata** | ≤10 | Maksimum 10 düşük hata |
+| **Test Timeout** | 60s | Test süresi limiti |
+
+**Desteklenen Framework'ler:**
+
+| Dil | Framework'ler |
+|-----|---------------|
+| JavaScript/TypeScript | Jest, Vitest, Mocha |
+| Python | Pytest |
+| Go | go test |
+| Rust | cargo test |
+
+**Dosyalar:**
+- `.agent/scripts/autonomous_tdd.py` - Core TDD modülü
+- `.agent/scripts/tdd-cli.sh` - CLI wrapper
+- `.agent/config/quality-gates.yaml` - Quality gates yapılandırması
+- `.agent/prompts/agents/testing.md` - Testing agent prompt (TDD kuralları)
+
+---
+
 #### Orchestrator Komutları
 
 ```bash
@@ -804,6 +1129,74 @@ bash .agent/scripts/orchestrate.sh find "*.tsx"
 # Uzantıya göre listeleme
 bash .agent/scripts/orchestrate.sh list tsx
 ```
+
+---
+
+#### Dashboard
+
+**Yeni özellik:** Terminal tabanlı görsel dashboard.
+
+```bash
+# Tek seferlik göster
+bash .agent/scripts/dashboard.sh
+
+# Auto-refresh modu (5 saniyede bir)
+bash .agent/scripts/dashboard.sh --watch
+
+# Interactive mod (menü ile yönetim)
+bash .agent/scripts/dashboard.sh --loop
+```
+
+**Dashboard Çıktısı:**
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║                    ODIN SYSTEM DASHBOARD                       ║
+║                    Version: 1.0.0    2025-01-09 15:30:45        ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║  CIRCUIT BREAKER STATUS                    QUEUE STATUS         ║
+║  ┌─────────────────────────────────┐    ┌──────────────────┐  ║
+║  │ Total: 26                       │    │ Pending: 12      │  ║
+║  │ Closed: 24 ✅ (92%)             │    │ In-Progress: 5   │  ║
+║  │ Open: 1 🔴 (4%)                 │    │ Completed: 45    │  ║
+║  │ Half-Open: 1 🟡 (4%)            │    │ Failed: 3        │  ║
+║  └─────────────────────────────────┘    └──────────────────┘  ║
+║                                                                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║  DEAD LETTER QUEUE (Failed Tasks)                                ║
+║  ┌────────────────────────────────────────────────────────────┐║
+║  │ Count: 3 stuck tasks                                         ║
+║  │ ⚠️  Tasks need manual intervention!                          ║
+║  └────────────────────────────────────────────────────────────┘║
+║                                                                  ║
+║  BLOCKED AGENTS:                                                 ║
+║  • database 🔴 (3 failures)                                      ║
+║                                                                  ║
+║  RECENT ACTIVITY:                                                ║
+║  • 15:30:12 frontend-001 ✅ Create Button component             ║
+║  • 15:29:45 backend-002 ✅ Implement /api/users endpoint        ║
+║                                                                  ║
+║  SYSTEM HEALTH: ✅ Normal                                        ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+
+[R]efresh   [Q]uit   [C]ircuits   [D]LQ   [H]elp
+```
+
+**Interactive Komutlar:**
+
+| Komut | Açıklama |
+|-------|----------|
+| **[R]** | Dashboard'u yenile |
+| **[Q]** | Çıkış |
+| **[C]** | Circuit Breaker detaylı liste |
+| **[D]** | Dead Letter Queue görüntüle |
+| **[H]** | Yardım menüsü |
+
+**Dosyalar:**
+- `.agent/scripts/dashboard.sh` - Dashboard script
 
 ---
 
