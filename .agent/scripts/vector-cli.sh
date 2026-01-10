@@ -37,7 +37,7 @@ VECTOR_PY="${SCRIPT_DIR}/vector_memory.py"
 PYTHON_CMD=""
 
 # Önce PYTHON ortalık değişkenini kontrol et
-if [[ -n "$PYTHON" ]]; then
+if [[ -n "${PYTHON:-}" ]]; then
     PYTHON_CMD="$PYTHON"
 # Diğer yaygın yolları dene
 elif [[ -f "/c/Users/mSv/AppData/Local/Programs/Python/Python313/python.exe" ]]; then

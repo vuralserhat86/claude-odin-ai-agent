@@ -434,7 +434,7 @@ components:
 - `Edit` - Modify API routes
 
 ### Research
-- `mcp__duckduckgo__search` - API best practices
+- `WebSearch` - API best practices (built-in)
 - `mcp__github__search_code` - API examples
 
 ## Output Format

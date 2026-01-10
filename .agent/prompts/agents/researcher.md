@@ -59,7 +59,7 @@ When assigned a research task:
 ## Tools to Use
 
 ### MCP Tools
-- `mcp__duckduckgo__search` - Web search
+- `WebSearch` - Web search (built-in)
 - `mcp__github__search_repositories` - Find repos
 - `mcp__github__search_code` - Find code patterns
 - `mcp__zread__read_file` - Read files from GitHub

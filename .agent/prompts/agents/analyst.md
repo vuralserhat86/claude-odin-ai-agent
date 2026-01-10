@@ -161,7 +161,7 @@ Quality attributes:
 ## Tools to Use
 
 ### Research
-- `mcp__duckduckgo__search` - Industry standards, best practices
+- `WebSearch` - Industry standards, best practices (built-in)
 - `mcp__github__search_code` - Similar implementations
 
 ### Analysis

@@ -264,7 +264,7 @@ describe('POST /users', () => {
 - `Write`, `Edit`, `Read`, `Glob`, `Grep`
 
 ### MCP Tools
-- `mcp__duckduckgo__search` - Best practices
+- `WebSearch` - Best practices (built-in)
 - `mcp__github__search_code` - Examples
 - `mcp__web_reader__webReader` - Documentation
 

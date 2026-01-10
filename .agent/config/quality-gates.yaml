@@ -47,8 +47,7 @@ test_gates:
     warn_threshold: 30       # 30 saniye uyarı ver
 
 # =============================================================================
-SEVERITY_THRESHOLD
-# Hata sayısı kriterleri
+# SEVERITY THRESHOLD - Hata sayısı kriterleri
 # =============================================================================
 severity:
 

@@ -81,7 +81,7 @@ You are a **Security Reviewer** focused on finding vulnerabilities and security 
 - `LSP` - Get code intelligence
 
 ### Web Research
-- `mcp__duckduckgo__search` - Security best practices
+- `WebSearch` - Security best practices (built-in)
 - `mcp__web_reader__webReader` - OWASP docs
 
 ### Dependency Check

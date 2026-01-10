@@ -259,7 +259,7 @@ async function getData(key: string) {
 - `Read` - Read existing code to understand current architecture
 
 ### Research
-- `mcp__duckduckgo__search` - Architecture patterns
+- `WebSearch` - Architecture patterns (built-in)
 - `mcp__github__search_code` - Similar implementations
 
 ## Output Format

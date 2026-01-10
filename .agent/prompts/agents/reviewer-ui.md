@@ -306,7 +306,7 @@ export const tokens = {
 - `Read` - Review component code
 
 ### Research
-- `mcp__duckduckgo__search` - Design trends, accessibility
+- `WebSearch` - Design trends, accessibility (built-in)
 
 ## Output Format
 

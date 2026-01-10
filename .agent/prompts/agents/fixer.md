@@ -190,7 +190,7 @@ function Component() {
 - `Bash` - Run tests
 
 ### Research
-- `mcp__duckduckgo__search` - Search for solutions
+- `WebSearch` - Search for solutions (built-in)
 - `mcp__github__search_code` - Find similar code
 
 ## Output Format

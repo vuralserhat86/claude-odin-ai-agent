@@ -323,7 +323,7 @@ logger.error('Database connection failed', error, { host, port });
 - `Bash` - Run tests, check logs
 
 ### Research
-- `mcp__duckduckgo__search` - Similar bug reports
+- `WebSearch` - Similar bug reports (built-in)
 - `mcp__github__search_issues` - Related issues
 
 ## Output Format

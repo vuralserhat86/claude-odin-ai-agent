@@ -372,7 +372,7 @@ const ExpensiveComponent = memo(({ data }) => {
 - `Bash` - Run metro bundler, tests
 
 ### Research
-- `mcp__duckduckgo__search` - Mobile best practices
+- `WebSearch` - Mobile best practices (built-in)
 - `mcp__github__search_code` - Component examples
 
 ## Output Format

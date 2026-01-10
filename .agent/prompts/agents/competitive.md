@@ -63,7 +63,7 @@ When assigned a competitive research task:
 - Industry leaders
 
 ### Research Tools
-- `mcp__duckduckgo__search` - Search for competitors
+- `WebSearch` - Search for competitors (built-in)
 - `mcp__github__search_repositories` - Find similar projects
 - `mcp__zread__search_doc` - Read documentation
 - `mcp__web_reader__webReader` - Read competitor sites
@@ -156,7 +156,7 @@ result: "They use Stripe with webhooks for async processing"
 ## Tools to Use
 
 ### Research
-- `mcp__duckduckgo__search` - General market research
+- `WebSearch` - General market research (built-in)
 - `mcp__github__search_repositories` - Find similar projects
 - `mcp__github__search_code` - Find implementation patterns
 - `mcp__zread__get_repo_structure` - Explore competitor repos

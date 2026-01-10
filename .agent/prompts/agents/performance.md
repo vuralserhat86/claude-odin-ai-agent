@@ -353,7 +353,7 @@ console.log({
 - `Grep` - Find performance issues
 
 ### Research
-- `mcp__duckduckgo__search` - Performance best practices
+- `WebSearch` - Performance best practices (built-in)
 - `mcp__github__search_code` - Optimization examples
 
 ## Output Format

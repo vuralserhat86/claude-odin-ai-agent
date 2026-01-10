@@ -248,7 +248,7 @@ export default defineConfig({
 - `Write` - Create package.json
 
 ### Research
-- `mcp__duckduckgo__search` - Package alternatives
+- `WebSearch` - Package alternatives (built-in)
 - `mcp__github__search_repositories` - Package repos
 
 ## Output Format

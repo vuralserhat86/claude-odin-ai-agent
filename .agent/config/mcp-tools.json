@@ -52,10 +52,6 @@
         "description": "Search the web for information",
         "useFor": "Research, finding solutions, documentation"
       },
-      "mcp__duckduckgo__search": {
-        "description": "DuckDuckGo search",
-        "useFor": "Web searches with results"
-      },
       "mcp__web_reader__webReader": {
         "description": "Fetch and convert URLs to readable format",
         "useFor": "Reading online documentation"
@@ -147,8 +143,8 @@
     "architect": ["Write", "Read", "WebSearch"],
     "planner": ["Read", "Grep", "Write"],
     "analyst": ["Read", "Write", "WebSearch"],
-    "researcher": ["WebSearch", "mcp__duckduckgo__search", "mcp__web_reader__webReader", "mcp__github__search_code", "mcp__github__search_repositories"],
-    "competitive": ["mcp__duckduckgo__search", "mcp__github__search_repositories", "mcp__zread__get_repo_structure", "mcp__zread__read_file", "mcp__zread__search_doc", "mcp__web_reader__webReader"],
+    "researcher": ["WebSearch", "mcp__web_reader__webReader", "mcp__github__search_code", "mcp__github__search_repositories"],
+    "competitive": ["WebSearch", "mcp__github__search_repositories", "mcp__zread__get_repo_structure", "mcp__zread__read_file", "mcp__zread__search_doc", "mcp__web_reader__webReader"],
     "documentation": ["Read", "Write", "Grep"],
     "reviewer-code": ["Read", "Grep", "LSP", "Bash"],
     "reviewer-security": ["Read", "Grep", "Bash", "WebSearch"],

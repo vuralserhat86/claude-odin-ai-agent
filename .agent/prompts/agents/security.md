@@ -363,7 +363,7 @@ app.use(helmet.hsts({
 - `Read` - Review code for issues
 
 ### Research
-- `mcp__duckduckgo__search` - Security best practices
+- `WebSearch` - Security best practices (built-in)
 - `mcp__web_reader__webReader` - OWASP documentation
 
 ## Output Format

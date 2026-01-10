@@ -158,7 +158,7 @@ describe('UserList', () => {
 - `Glob` - Find related files
 
 ### MCP Tools
-- `mcp__duckduckgo__search` - Search for best practices
+- `WebSearch` - Search for best practices (built-in)
 - `mcp__github__search_code` - Find example code
 - `mcp__web_reader__webReader` - Read documentation
 

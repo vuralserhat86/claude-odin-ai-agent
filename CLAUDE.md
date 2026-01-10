@@ -1,8 +1,8 @@
 # CLAUDE.md - Autonomous AI Development Agent
 
 > Bu dosya, Claude AI'nin bu çalışma alanında nasıl davranacağını tanımlar.
-> **Sürüm 1.0** - Otonom AI Geliştirme Orchestrator
-> **Son Güncelleme:** 2026-01-09
+> **Sürüm 1.1** - Otonom AI Geliştirme Orchestrator
+> **Son Güncelleme:** 2026-01-10
 
 ---
 
@@ -54,7 +54,7 @@ Bu çalışma alanında **Otonom AI Geliştirme Sistemi** kurulu:
 | **Agent System** | `.agent/prompts/agents/` | 25 specialized agent |
 | **Circuit Breaker** | `.agent/state/circuits.json` | Hata koruması |
 | **Queue System** | `.agent/queue/tasks-*.json` | Task yönetimi |
-| **MCP Tools** | GitHub + Web research | Araştırma araçları |
+| **MCP Tools** | GitHub, Z.ai (search, reader, image) | 5 MCP server |
 
 ### Sistem Kapasitesi
 
@@ -114,7 +114,7 @@ ANALİZ: Simple mi? Complex mi?
 | Prompt | Tip | Agent'lar |
 |--------|------|-----------|
 | "User authentication system oluştur" | Complex | backend, database, security, frontend |
-| "React hooks araştır" | Complex | researcher + MCP |
+| "React hooks araştır" | Complex | researcher + WebSearch |
 | "Performance optimization yap" | Complex | performance + architect |
 | "E-ticaret sitesi geliştir" | Complex | 10+ agent |
 
@@ -166,50 +166,6 @@ jq ".circuits.{agent-type}.state" .agent/state/circuits.json
 | diğerleri | 3 | 300s | Varsayılan |
 
 > 🔴 **Circuit OPEN = Agent bloke. Alternatif bul veya DLQ.**
-
----
-
-## 🔴 KESİN KURAL: MCP TOOLS KULLANIMI (ZORUNLU)
-
-**Agent araştırma yaparken MCP tools kullan.**
-
-### Araştırma Workflow
-
-```markdown
-Agent research yapacak:
-
-1. GitHub Code Search
-   Tool: mcp__github__search_code
-   Query: "{tech stack} {feature} example"
-   Amaç: Gerçek kod örnekleri bul
-
-2. Web Search
-   Tool: mcp__duckduckgo__search
-   Query: "best practices {tech stack} {feature}"
-   Amaç: Best practices araştır
-
-3. Web Content Reader
-   Tool: mcp__web_reader__webReader
-   URL: {documentation URL}
-   Amaç: Dokümantasyon oku
-
-4. Synthesize
-   • Bulguları birleştir
-   • Yaklaşım öner
-   • Kod üret
-```
-
-### MCP Tools
-
-| Tool | Kullanım | Örnek Query |
-|------|----------|-------------|
-| `mcp__github__search_code` | Kod örneği bul | "React hooks useState pattern" |
-| `mcp__github__search_repositories` | Repo bul | "JWT authentication Node.js" |
-| `mcp__github__get_file_contents` | GitHub dosyası oku | Implementation example |
-| `mcp__duckduckgo__search` | Web ara | "best practices React 2024" |
-| `mcp__web_reader__webReader` | Web içeriği oku | Documentation URL |
-
-> 🔴 **Araştırma yapmazsan → Eksiz bilgi → Kötü kod.**
 
 ---
 
@@ -892,7 +848,7 @@ Sonuç: ✅ "8 task tamamlandı, 12 dosya oluşturuldu"
 
 **Süre:** ~5 dakika
 **Agent'lar:** 5 (parallel)
-**MCP Tools:** GitHub + Web search + Reader
+**MCP Tools:** GitHub, Z.ai (web-search, web-reader, image analysis)
 
 ---
 
@@ -973,11 +929,10 @@ Komut: bash .agent/scripts/queue.sh dlq-review
 3. **Circuit Breaker Kontrol** - Agent execution öncesi kontrol
 4. **JSON Validasyonu Zorunlu** - State dosyaları yazmadan önce validate et
 5. **Vektör Hafıza Kullanımı (Önerilen)** - Büyük projelerde RAG kullan
-6. **MCP Tools Kullanımı** - Araştırma için GitHub + Web
-7. **Agent Prompt Okuma** - Agent çalıştırmadan önce prompt oku
-8. **DLQ Yönetimi** - 3 retry'den sonra manuel müdahale
-9. **Direct Tools** - Simple task'lar için agent yok
-10. **Agent Delegation** - Complex task'lar için multi-agent
+6. **Agent Prompt Okuma** - Agent çalıştırmadan önce prompt oku
+7. **DLQ Yönetimi** - 3 retry'den sonra manuel müdahale
+8. **Direct Tools** - Simple task'lar için agent yok
+9. **Agent Delegation** - Complex task'lar için multi-agent
 
 ---
 
@@ -988,9 +943,9 @@ Komut: bash .agent/scripts/queue.sh dlq-review
 | Text change | Yok | Grep, Read, Edit | 2-5s | Hayır | Hayır |
 | File create | Yok | Write | 5-10s | Hayır | Hayır |
 | State write | Yok | validate.py + Write | 2-5s | **Evet** | Hayır |
-| Research | researcher | MCP (GitHub, Web) | 30-60s | Hayır | Opsiyonel |
-| Single agent | {type} | Agent prompt + MCP | 1-3m | State için evet | Opsiyonel |
-| Multi-agent | 5+ | Parallel + MCP | 5-15m | State için evet | Opsiyonel |
+| Research | researcher | WebSearch | 30-60s | Hayır | Opsiyonel |
+| Single agent | {type} | Agent prompt | 1-3m | State için evet | Opsiyonel |
+| Multi-agent | 5+ | Parallel | 5-15m | State için evet | Opsiyonel |
 
 **Not:** RAG (Vektör Hafıza) 200+ task'lı projelerde önerilir.
 

@@ -176,7 +176,7 @@ When assigned a planning task:
 ## Tools to Use
 
 ### Research
-- `mcp__duckduckgo__search` - Research approaches
+- `WebSearch` - Research approaches (built-in)
 - `mcp__github__search_code` - Find examples
 - `mcp__web_reader__webReader` - Read documentation
 
