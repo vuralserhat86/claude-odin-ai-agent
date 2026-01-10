@@ -2,17 +2,17 @@
 
 # 🪦 ODIN
 
-### Autonomous AI Development Agent v1.0.0
+### Autonomous AI Development Agent v1.1.0
 
 **Claude Code için Otonom Çoklu-Agent Geliştirme Sistemi**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/)
 [![Status](https://img.shields.io/badge/status-production--ready-success.svg)](https://github.com/)
 [![Language](https://img.shields.io/badge/language-Türkçe-red.svg)](https://github.com/)
 [![Agents](https://img.shields.io/badge/agents-25-specialized-green.svg)](https://github.com/)
 
-**25 Specialized Agent | Circuit Breaker | Dead Letter Queue | MCP Tools Integration**
+**25 Specialized Agent | Circuit Breaker | Dead Letter Queue**
 
 Tam otonom çoklu-agent orkestrasyonu ile geliştirme deneyiminizi bir üst seviyeye taşıyın.
 
@@ -37,7 +37,7 @@ Tam otonom çoklu-agent orkestrasyonu ile geliştirme deneyiminizi bir üst sevi
 
 ### Odin Nedir?
 
-**Odin**, Claude Code için tasarlanmış **otonom çoklu-agent geliştirme sistemidir**. 25 farklı uzman agent, Circuit Breaker pattern'i, Dead Letter Queue (DLQ) ve MCP (Model Context Protocol) tools entegrasyonu ile tam otonom geliştirme deneyimi sunar.
+**Odin**, Claude Code için tasarlanmış **otonom çoklu-agent geliştirme sistemidir**. 25 farklı uzman agent, Circuit Breaker pattern'i, Dead Letter Queue (DLQ) ile tam otonom geliştirme deneyimi sunar.
 
 ### 🎯 Ana Amaç
 
@@ -66,7 +66,7 @@ Tam otonom çoklu-agent orkestrasyonu ile geliştirme deneyiminizi bir üst sevi
 | **Multi-Agent** | 25 uzman agent | Core, Dev, Research, Quality, Support |
 | **Circuit Breaker** | Hatalı agent'ları otomatik engelle | 26 circuit, 3 state |
 | **Dead Letter Queue** | Başarısız task'ları yönet | 3 retry + exponential backoff |
-| **MCP Tools** | GitHub + Web research | Gerçek zamanlı araştırma |
+| **MCP Tools** | 5 MCP server entegrasyonu | GitHub, Z.ai (search, reader, image) |
 | **Auto Analysis** | Simple vs Complex task ayrımı | Otomatik routing |
 | **Türkçe** | Tam Türkçe raporlama | Konuşma + Kod yorumları |
 | **RAG** | Vektör tabanlı hafıza | 384 boyutlu embedding |
@@ -106,8 +106,8 @@ Tam otonom çoklu-agent orkestrasyonu ile geliştirme deneyiminizi bir üst sevi
 ║  │  │  │ Edit           │   │      │  │ ├─ Database Agent        │ │   │  ║
 ║  │  │  │ Write          │   │      │  │ ├─ Security Agent        │ │   │  ║
 ║  │  │  └────────────────┘   │      │  │ └─ 21 More Agents...     │ │   │  ║
-║  │  │  ~2-5 seconds         │      │  │ + MCP Tools Integration   │ │   │  ║
-║  │  └──────────────────────┘      │  └──────────────────────────┘ │   │  ║
+║  │  │  ~2-5 seconds         │      │  └──────────────────────────┘ │   │  ║
+║  │  └──────────────────────┘      │                              │   │  ║
 ║  │                                 │  ~1-15 minutes                │   │  ║
 ║  │                                 └────────────────────────────────┘   │  ║
 ║  └──────────────────────────────────────────────────────────────────────┘  ║
@@ -132,12 +132,13 @@ Tam otonom çoklu-agent orkestrasyonu ile geliştirme deneyiminizi bir üst sevi
 ║                                    ▼                                        ║
 ║  ┌──────────────────────────────────────────────────────────────────────┐  ║
 ║  │  LAYER 1: I/O & EXTERNAL SERVICES                                     │  ║
-║  │  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐   │  ║
-║  │  │  MCP: GitHub      │  │  MCP: Web        │  │  Native Tools    │   │  ║
-║  │  │  • Code Search    │  │  • DuckDuckGo    │  │  • File Ops      │   │  ║
-║  │  │  • Repositories   │  │  • Content Read  │  │  • Bash          │   │  ║
-║  │  │  • File Contents  │  │  • Documentation │  │  • Git           │   │  ║
-║  │  └──────────────────┘  └──────────────────┘  └──────────────────┘   │  ║
+║  │  ┌──────────────────────────────────────────────────────────────────┐   │  ║
+║  │  │  Native Tools                                                    │   │  ║
+║  │  │  • File Operations (Read, Write, Edit, Grep, Glob)              │   │  ║
+║  │  │  • Bash Commands                                                │   │  ║
+║  │  │  • Git Operations                                               │   │  ║
+║  │  │  • Web Search                                                   │   │  ║
+║  │  └──────────────────────────────────────────────────────────────────┘   │  ║
 ║  └──────────────────────────────────────────────────────────────────────┘  ║
 ║                                                                            ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -179,10 +180,10 @@ USER PROMPT
 │              │    │    → 25 specialized agent            │
 │ ~2-5s        │    │                                      │
 │              │    │ 3. Parallel Execution (max 5)        │
-└──────────────┘    │    • Backend agent → MCP: GitHub     │
-                   │    • Database agent → MCP: Web       │
-                   │    • Security agent → MCP: Search    │
-                   │    • Frontend agent → MCP: Docs      │
+└──────────────┘    │    • Backend agent → Code generation │
+                   │    • Database agent → Schema design   │
+                   │    • Security agent → Security review │
+                   │    • Frontend agent → UI components   │
                    │                                      │
                    │    ~1-15m                             │
                    └──────────────────────────────────────┘
@@ -459,10 +460,9 @@ odin-ai-agent/                      (131 dosya, 27 dizin)
 │   │   │   ├── tdd-cli.sh          ← TDD CLI
 │   │   │   └── vector-cli.sh       ← RAG CLI
 │   │   │
-│   │   ├── Test Script'leri (5):
+│   │   ├── Test Script'leri (4):
 │   │   │   ├── test-circuit.sh     ← Circuit test
 │   │   │   ├── test-queue.sh       ← Queue test
-│   │   │   ├── test-mcp.sh         ← MCP tools test
 │   │   │   ├── test-validation.sh  ← Validasyon test
 │   │   │   └── test-rag.sh         ← RAG test
 │   │   │
@@ -591,37 +591,6 @@ odin-ai-agent/                      (131 dosya, 27 dizin)
 │                                    └─────────────────────────┘  │
 │                                                                  │
 └─────────────────────────────────────────────────────────────────┘
-```
-
----
-
-### 🔌 MCP Tools Integration
-
-**Araştırma Workflow:**
-
-```
-Agent Research Yapacak:
-    │
-    ▼
-1. GitHub Code Search
-   "JWT authentication example"
-   → Gerçek kod örnekleri bul
-    │
-    ▼
-2. Web Search
-   "best practices JWT 2024"
-   → Güncel best practices araştır
-    │
-    ▼
-3. Web Content Reader
-   "https://jwt.io/introduction"
-   → Dokümantasyon oku
-    │
-    ▼
-4. Synthesize
-   → Bulguları birleştir
-   → Yaklaşım öner
-   → Kod üret
 ```
 
 ---
@@ -831,7 +800,6 @@ Odin:    18m     ███░░░░░░░░░░░░░░░░░░
 - **Otomatik Task Analizi:** Simple vs Complex otomatik ayrım
 - **Circuit Breaker:** Hatalı agent'ları otomatik engelle
 - **DLQ:** Başarısız task'ları otomatik retry
-- **MCP Integration:** Gerçek zamanlı araştırma
 - **RAG:** Vektör tabanlı hafıza ile semantik arama
 - **TDD:** Otonom test döngüsü ve auto-fix
 

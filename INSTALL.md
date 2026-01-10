@@ -1,6 +1,6 @@
 # 📥 ODIN AI Agent System - Kurulum Rehberi
 
-**Version:** 1.0.0
+**Version:** 1.1.0
 **Durum:** Production Ready
 **Platform:** Claude Code (Windows, macOS, Linux)
 
@@ -15,7 +15,7 @@
 | **25 Specialized Agent** | Frontend, Backend, Database, Security, Testing... |
 | **Circuit Breaker** | Hatalı agent'ları otomatik engelle |
 | **Dead Letter Queue** | Başarısız task'ları yönet |
-| **MCP Tools** | GitHub + Web research entegrasyonu |
+| **MCP Tools** | 5 MCP server (GitHub, Z.ai search/reader/image) |
 | **Auto Analysis** | Simple vs Complex task ayrımı |
 | **Türkçe Raporlama** | Tam Türkçe konuşma ve kodlama |
 
@@ -72,7 +72,7 @@ cp CLAUDE.md ~/.claude/CLAUDE.md
       },
       {
         "type": "command",
-        "command": "echo '🪦 Odin AI Agent System v1.0.0 Loaded'"
+        "command": "echo '🪦 Odin AI Agent System v1.1.0 Loaded'"
       }
     ]
   }
@@ -150,10 +150,11 @@ Odin sistem durumu nedir?
 
 **Beklenen Çıktı:**
 ```
-🪦 Odin AI Agent System v1.0.0
+🪦 Odin AI Agent System v1.1.0
 
 ✅ Sistem Aktif
    - 25 agent hazır
+   - MCP Tools: 5 server aktif
    - Circuit breaker: 26/26 CLOSED
    - Queue: 5 aktif
    - Knowledge base: 51 dosya
@@ -291,7 +292,7 @@ Merhaba Odin! Beni tanı
 
 **Beklenen Yanıt:**
 ```
-🪦 Odin AI Agent System v1.0.0
+🪦 Odin AI Agent System v1.1.0
 
 Merhaba! Ben Odin, 25 specialized agent ile otonom geliştirme sistemi.
 
@@ -306,6 +307,6 @@ Size nasıl yardımcı olabilirim?
 
 ---
 
-**Versiyon:** 1.0.0
-**Son Güncelleme:** 2026-01-09
+**Versiyon:** 1.1.0
+**Son Güncelleme:** 2026-01-10
 **Durum:** ✅ Production Ready
